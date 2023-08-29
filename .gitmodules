@@ -4,8 +4,8 @@
 	branch = v2.1.1
 [submodule "dependencies/cosmos-sdk"]
 	path = dependencies/cosmos-sdk
-	url = https://github.com/cosmos/cosmos-sdk.git
-	branch = v0.47.4
+	url = https://github.com/persistenceOne/cosmos-sdk.git
+	branch = v0.47.3-lsm4
 [submodule "dependencies/pstake-native"]
 	path = dependencies/pstake-native
 	url = https://github.com/persistenceOne/pstake-native.git
