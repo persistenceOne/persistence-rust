@@ -152,17 +152,29 @@ impl CodeGenerator {
             self.project.name
         );
 
+        let skip_paths = vec!["core/internal"];
+
         // Compile proto files for each file in `protos` variable
         // `buf generate —template {<buf_gen_template} <proto_file>`
         for project in all_related_projects {
             let buf_root = WalkDir::new(&self.root.join(&project.project_dir))
                 .into_iter()
                 .filter_map(|e| e.ok())
+                .filter(|e| !skip_paths.contains(&e.file_name().to_str().unwrap_or("")))
                 .find(|e| {
-                    e.file_name()
+                    let res = e.file_name()
                         .to_str()
                         .map(|s| s == "buf.yaml" || s == "buf.yml")
-                        .unwrap_or(false)
+                        .unwrap_or(false);
+
+                    // HACK: ignore core/internal for codegen of cosmos-sdk
+                    let parent = e.path().parent().unwrap().clone().to_path_buf().to_str().unwrap().to_string();
+                    for skip_path in &skip_paths {
+                        if parent.ends_with(skip_path) {
+                            return false;
+                        }
+                    }
+                    res
                 })
                 .map(|e| e.path().parent().unwrap().to_path_buf())
                 .unwrap();
