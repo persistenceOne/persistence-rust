@@ -1,14 +1,15 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+#![doc = include_str!("../README.md")]
+#![cfg_attr(docsrs, feature(doc_cfg))]
+#![forbid(unsafe_code)]
+#![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+/// The version (commit hash) of the Cosmos SDK used when generating this library.
+// pub const PERSISTENCE_VERSION: &str = include_str!("types/");
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+mod serde;
+pub mod shim;
+
+#[allow(deprecated)]
+pub mod types;
+
+pub use shim::{cosmwasm_to_proto_coins, try_proto_to_cosmwasm_coins};
