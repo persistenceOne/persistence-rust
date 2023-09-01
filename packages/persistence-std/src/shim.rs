@@ -1,11 +1,12 @@
 use ::serde::{Deserialize, Deserializer, Serialize, Serializer};
 use chrono::{DateTime, NaiveDateTime, Utc};
 use cosmwasm_std::StdResult;
-use serde::de;
+use serde::{de, ser};
 use serde::de::Visitor;
 
 use std::fmt;
 use std::str::FromStr;
+use prost::Message;
 
 
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
@@ -285,14 +286,9 @@ macro_rules! expand_as_any {
 // work correctly. Since after serialization, it currently loses @type tag.
 // And deserialization works by trying to iteratively match the structure.
 expand_as_any!(
-    // pools have distincted structure
-    // crate::types::osmosis::gamm::v1beta1::Pool,
-    // crate::types::osmosis::gamm::poolmodels::stableswap::v1beta1::Pool,
-    // crate::types::osmosis::concentratedliquidity::v1beta1::Pool,
-    // crate::types::osmosis::cosmwasmpool::v1beta1::CosmWasmPool,
-    // // balancer pool param has more fields
-    // crate::types::osmosis::gamm::v1beta1::PoolParams,
-    // crate::types::osmosis::gamm::poolmodels::stableswap::v1beta1::PoolParams,
+    // Execute Contract Proposal
+    crate::types::cosmwasm::wasm::v1::MsgExecuteContract,
+    crate::types::cosmos::gov::v1::Proposal,
 );
 
 macro_rules! impl_prost_types_exact_conversion {
