@@ -1,4 +1,9 @@
+use std::collections::BTreeMap;
+
 use persistence_std_derive::CosmwasmExt;
+use prost::Message;
+use serde::{Deserializer, Deserialize};
+use serde_cw_value::Value;
 /// ContractExecutionAuthorization defines authorization for wasm execute.
 /// Since: wasmd 0.30
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1374,6 +1379,20 @@ pub struct MsgInstantiateContract2Response {
     #[prost(bytes = "vec", tag = "2")]
     pub data: ::prost::alloc::vec::Vec<u8>,
 }
+
+pub fn de_map_to_bytes<'de, D>(de: D) -> Result<Vec<u8>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let v: Value = Deserialize::deserialize(de)?;
+
+    // serialize to json again
+    let j = serde_json_wasm::to_string(&v).unwrap();
+
+    let bytes = j.as_bytes().to_vec();
+    Ok(bytes)
+}
+
 /// MsgExecuteContract submits the given message data to a smart contract
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, Eq, ::prost::Message)]
@@ -1388,6 +1407,7 @@ pub struct MsgExecuteContract {
     pub contract: ::prost::alloc::string::String,
     /// Msg json encoded message to be passed to the contract
     #[prost(bytes = "vec", tag = "3")]
+    #[serde(deserialize_with = "de_map_to_bytes")]
     pub msg: ::prost::alloc::vec::Vec<u8>,
     /// Funds coins that are transferred to the contract on execution
     #[prost(message, repeated, tag = "5")]
