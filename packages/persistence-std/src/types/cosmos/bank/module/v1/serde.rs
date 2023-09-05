@@ -42,6 +42,7 @@ impl<'de> serde::Deserialize<'de> for Module {
         enum GeneratedField {
             BlockedModuleAccountsOverride,
             Authority,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -73,7 +74,7 @@ impl<'de> serde::Deserialize<'de> for Module {
                                 Ok(GeneratedField::BlockedModuleAccountsOverride)
                             }
                             "authority" => Ok(GeneratedField::Authority),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -112,6 +113,9 @@ impl<'de> serde::Deserialize<'de> for Module {
                                 return Err(serde::de::Error::duplicate_field("authority"));
                             }
                             authority__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }

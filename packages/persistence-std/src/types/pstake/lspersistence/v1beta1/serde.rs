@@ -34,6 +34,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
         enum GeneratedField {
             Params,
             LiquidValidators,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -64,7 +65,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             "liquidValidators" | "liquid_validators" => {
                                 Ok(GeneratedField::LiquidValidators)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -104,6 +105,9 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                 );
                             }
                             liquid_validators__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -150,6 +154,7 @@ impl<'de> serde::Deserialize<'de> for LiquidValidator {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             OperatorAddress,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -179,7 +184,7 @@ impl<'de> serde::Deserialize<'de> for LiquidValidator {
                             "operatorAddress" | "operator_address" => {
                                 Ok(GeneratedField::OperatorAddress)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -213,6 +218,9 @@ impl<'de> serde::Deserialize<'de> for LiquidValidator {
                                 );
                             }
                             operator_address__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -299,6 +307,7 @@ impl<'de> serde::Deserialize<'de> for LiquidValidatorState {
             Status,
             DelShares,
             LiquidTokens,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -334,7 +343,7 @@ impl<'de> serde::Deserialize<'de> for LiquidValidatorState {
                             "liquidTokens" | "liquid_tokens" => {
                                 Ok(GeneratedField::LiquidTokens)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -401,6 +410,9 @@ impl<'de> serde::Deserialize<'de> for LiquidValidatorState {
                             }
                             liquid_tokens__ = Some(map.next_value()?);
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(LiquidValidatorState {
@@ -456,6 +468,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidStake {
         enum GeneratedField {
             DelegatorAddress,
             Amount,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -486,7 +499,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidStake {
                                 Ok(GeneratedField::DelegatorAddress)
                             }
                             "amount" => Ok(GeneratedField::Amount),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -526,6 +539,9 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidStake {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
                             amount__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -567,7 +583,9 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidStakeResponse {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -592,7 +610,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidStakeResponse {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -667,6 +685,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidUnstake {
         enum GeneratedField {
             DelegatorAddress,
             Amount,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -697,7 +716,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidUnstake {
                                 Ok(GeneratedField::DelegatorAddress)
                             }
                             "amount" => Ok(GeneratedField::Amount),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -738,6 +757,9 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidUnstake {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
                             amount__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -787,6 +809,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidUnstakeResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             CompletionTime,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -816,7 +839,7 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidUnstakeResponse {
                             "completionTime" | "completion_time" => {
                                 Ok(GeneratedField::CompletionTime)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -852,6 +875,9 @@ impl<'de> serde::Deserialize<'de> for MsgLiquidUnstakeResponse {
                                 );
                             }
                             completion_time__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -904,6 +930,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
         enum GeneratedField {
             Authority,
             Params,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -932,7 +959,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
                         match value {
                             "authority" => Ok(GeneratedField::Authority),
                             "params" => Ok(GeneratedField::Params),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -971,6 +998,9 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
                             params__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1012,7 +1042,9 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -1037,7 +1069,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -1179,6 +1211,7 @@ impl<'de> serde::Deserialize<'de> for NetAmountState {
             TotalRemainingRewards,
             TotalUnbondingBalance,
             ProxyAccBalance,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1225,7 +1258,7 @@ impl<'de> serde::Deserialize<'de> for NetAmountState {
                             "proxyAccBalance" | "proxy_acc_balance" => {
                                 Ok(GeneratedField::ProxyAccBalance)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1317,6 +1350,9 @@ impl<'de> serde::Deserialize<'de> for NetAmountState {
                                 );
                             }
                             proxy_acc_balance__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1451,6 +1487,7 @@ impl<'de> serde::Deserialize<'de> for Params {
             MinLiquidStakingAmount,
             AdminAddress,
             FeeAddress,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1504,7 +1541,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                             "feeAddress" | "fee_address" => {
                                 Ok(GeneratedField::FeeAddress)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1605,6 +1642,9 @@ impl<'de> serde::Deserialize<'de> for Params {
                             }
                             fee_address__ = Some(map.next_value()?);
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(Params {
@@ -1653,7 +1693,9 @@ impl<'de> serde::Deserialize<'de> for QueryLiquidValidatorsRequest {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -1678,7 +1720,7 @@ impl<'de> serde::Deserialize<'de> for QueryLiquidValidatorsRequest {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -1749,6 +1791,7 @@ impl<'de> serde::Deserialize<'de> for QueryLiquidValidatorsResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             LiquidValidators,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1778,7 +1821,7 @@ impl<'de> serde::Deserialize<'de> for QueryLiquidValidatorsResponse {
                             "liquidValidators" | "liquid_validators" => {
                                 Ok(GeneratedField::LiquidValidators)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1814,6 +1857,9 @@ impl<'de> serde::Deserialize<'de> for QueryLiquidValidatorsResponse {
                                 );
                             }
                             liquid_validators__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1851,7 +1897,9 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -1876,7 +1924,7 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -1942,6 +1990,7 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Params,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1969,7 +2018,7 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                     {
                         match value {
                             "params" => Ok(GeneratedField::Params),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -2001,6 +2050,9 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
                             params__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -2038,7 +2090,9 @@ impl<'de> serde::Deserialize<'de> for QueryStatesRequest {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -2063,7 +2117,7 @@ impl<'de> serde::Deserialize<'de> for QueryStatesRequest {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -2129,6 +2183,7 @@ impl<'de> serde::Deserialize<'de> for QueryStatesResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             NetAmountState,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -2158,7 +2213,7 @@ impl<'de> serde::Deserialize<'de> for QueryStatesResponse {
                             "netAmountState" | "net_amount_state" => {
                                 Ok(GeneratedField::NetAmountState)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -2192,6 +2247,9 @@ impl<'de> serde::Deserialize<'de> for QueryStatesResponse {
                                 );
                             }
                             net_amount_state__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -2351,6 +2409,7 @@ impl<'de> serde::Deserialize<'de> for VotingPower {
             StakingVotingPower,
             LiquidStakingVotingPower,
             ValidatorVotingPower,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -2388,7 +2447,7 @@ impl<'de> serde::Deserialize<'de> for VotingPower {
                             "validatorVotingPower" | "validator_voting_power" => {
                                 Ok(GeneratedField::ValidatorVotingPower)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -2448,6 +2507,9 @@ impl<'de> serde::Deserialize<'de> for VotingPower {
                                 );
                             }
                             validator_voting_power__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -2509,6 +2571,7 @@ impl<'de> serde::Deserialize<'de> for WhitelistedValidator {
         enum GeneratedField {
             ValidatorAddress,
             TargetWeight,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -2541,7 +2604,7 @@ impl<'de> serde::Deserialize<'de> for WhitelistedValidator {
                             "targetWeight" | "target_weight" => {
                                 Ok(GeneratedField::TargetWeight)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -2586,6 +2649,9 @@ impl<'de> serde::Deserialize<'de> for WhitelistedValidator {
                                 );
                             }
                             target_weight__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }

@@ -19,7 +19,9 @@ impl<'de> serde::Deserialize<'de> for Module {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -44,7 +46,7 @@ impl<'de> serde::Deserialize<'de> for Module {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)

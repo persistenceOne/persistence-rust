@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// Module is the config object for the auth module.

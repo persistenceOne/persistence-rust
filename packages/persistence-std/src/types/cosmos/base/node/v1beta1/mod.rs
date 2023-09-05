@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// ConfigRequest defines the request structure for the Config gRPC query.

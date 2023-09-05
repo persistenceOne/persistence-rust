@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 #[allow(clippy::derive_partial_eq_without_eq)]

@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// GenericAuthorization gives the grantee unrestricted permissions to execute

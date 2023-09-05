@@ -1,6 +1,7 @@
-
+// mod serde;
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
+// mod serde;
 /// ContractExecutionAuthorization defines authorization for wasm execute.
 /// Since: wasmd 0.30
 #[allow(clippy::derive_partial_eq_without_eq)]

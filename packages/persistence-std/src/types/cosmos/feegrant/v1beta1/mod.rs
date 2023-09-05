@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// BasicAllowance implements Allowance with a one-time grant of coins

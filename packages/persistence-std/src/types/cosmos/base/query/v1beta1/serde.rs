@@ -68,6 +68,7 @@ impl<'de> serde::Deserialize<'de> for PageRequest {
             Limit,
             CountTotal,
             Reverse,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -101,7 +102,7 @@ impl<'de> serde::Deserialize<'de> for PageRequest {
                                 Ok(GeneratedField::CountTotal)
                             }
                             "reverse" => Ok(GeneratedField::Reverse),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -173,6 +174,9 @@ impl<'de> serde::Deserialize<'de> for PageRequest {
                             }
                             reverse__ = Some(map.next_value()?);
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(PageRequest {
@@ -233,6 +237,7 @@ impl<'de> serde::Deserialize<'de> for PageResponse {
         enum GeneratedField {
             NextKey,
             Total,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -261,7 +266,7 @@ impl<'de> serde::Deserialize<'de> for PageResponse {
                         match value {
                             "nextKey" | "next_key" => Ok(GeneratedField::NextKey),
                             "total" => Ok(GeneratedField::Total),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -307,6 +312,9 @@ impl<'de> serde::Deserialize<'de> for PageResponse {
                                     .next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }

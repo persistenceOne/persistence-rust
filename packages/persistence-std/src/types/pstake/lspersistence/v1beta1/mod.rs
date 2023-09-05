@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// Params defines the set of params for the liquidstaking module.

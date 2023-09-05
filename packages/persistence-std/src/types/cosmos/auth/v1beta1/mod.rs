@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// BaseAccount defines a base account type. It contains all the necessary fields

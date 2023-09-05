@@ -51,7 +51,10 @@ fn recur_gen_mod(for_dir: &Path, start_dir: &Path, paths: Vec<Vec<String>>, incl
             .join(format!("{}.rs", include_file.split('.').last().unwrap()));
         fs::rename(from, to).unwrap();
     } else {
-        let ts = uniq_keys.iter().map(|k| {
+        let ts = uniq_keys.iter()
+        // dont't import serde mod
+        .filter(|k| *k != "serde")
+        .map(|k| {
             let module = format_ident!("{}", k);
             quote! { pub mod #module; }
         });

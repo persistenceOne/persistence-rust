@@ -137,7 +137,7 @@ pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSe
     let deprecated = get_deprecation(src, &e.ident, descriptor);
 
     e.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema)] },
+        syn::parse_quote! { #[derive(::schemars::JsonSchema)] },
     ]);
 
     if deprecated {

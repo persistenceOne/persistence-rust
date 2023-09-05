@@ -14,4 +14,6 @@ pub fn json_deserialization_fix_test() {
     let str: String = String::from_utf8(msg.msg.clone()).unwrap();
     assert_eq!(str, r#"{"resume_create_pool":{"pool_creation_request_id":1}}"#);
 
+    // str.as_bytes().to_vec();
+
 }

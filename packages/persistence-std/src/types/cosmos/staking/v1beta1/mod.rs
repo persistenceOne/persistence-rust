@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// NOTE: The following type is not implemented due to current limitations of code generator
@@ -563,7 +562,7 @@ impl Infraction {
 /// Since: cosmos-sdk 0.47-lsm
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(schemars::JsonSchema)]
+#[derive(::schemars::JsonSchema)]
 pub enum TokenizeShareLockStatus {
     /// An empty value is not allowed.
     Unspecified = 0,

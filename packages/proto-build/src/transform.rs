@@ -100,7 +100,13 @@ fn transform_module(
     nested_mod: bool,
 ) -> Vec<Item> {
     let items = transform_items(items, src, ancestors, descriptor);
-    let items = prepend(items);
+
+    // don't prepend to the serde.rs files
+    let items =  if src.file_name().unwrap().to_str().unwrap().ends_with("serde.rs") {
+        items
+    } else {
+        prepend(items)
+    };
 
     append(items, src, descriptor, nested_mod)
 }
@@ -155,6 +161,23 @@ fn transform_items(
         }
         _ => i,
     };
+
+    let is_not_serde_mod = |i: &Item| match i.clone() {
+        Item::Mod(m) => {
+            let ident = m.ident;
+
+            println!("\n\n\nident: {}", ident);
+            if ident != "serde" {
+                return true
+            }
+
+            return false
+        }
+        _ => true,
+    };
+
+
+
     items
         .into_iter()
         .map(|i| match i {
@@ -184,6 +207,7 @@ fn transform_items(
         // TODO: Remove this temporary hack when cosmos & tendermint code gen is supported
         .map(remove_struct_fields_that_depends_on_tendermint_proto)
         .map(|i: Item| transform_nested_mod(i, src, ancestors, descriptor))
+        .filter(|i| is_not_serde_mod(i))
         .collect::<Vec<Item>>()
 }
 

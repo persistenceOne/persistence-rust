@@ -91,6 +91,7 @@ impl<'de> serde::Deserialize<'de> for EpochInfo {
             CurrentEpochStartTime,
             EpochCountingStarted,
             CurrentEpochStartHeight,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -132,7 +133,7 @@ impl<'de> serde::Deserialize<'de> for EpochInfo {
                             "currentEpochStartHeight" | "current_epoch_start_height" => {
                                 Ok(GeneratedField::CurrentEpochStartHeight)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -219,6 +220,9 @@ impl<'de> serde::Deserialize<'de> for EpochInfo {
                                     .0,
                             );
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(EpochInfo {
@@ -270,6 +274,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Epochs,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -297,7 +302,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                     {
                         match value {
                             "epochs" => Ok(GeneratedField::Epochs),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -328,6 +333,9 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                 return Err(serde::de::Error::duplicate_field("epochs"));
                             }
                             epochs__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -376,6 +384,7 @@ impl<'de> serde::Deserialize<'de> for QueryCurrentEpochRequest {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Identifier,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -403,7 +412,7 @@ impl<'de> serde::Deserialize<'de> for QueryCurrentEpochRequest {
                     {
                         match value {
                             "identifier" => Ok(GeneratedField::Identifier),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -437,6 +446,9 @@ impl<'de> serde::Deserialize<'de> for QueryCurrentEpochRequest {
                                 return Err(serde::de::Error::duplicate_field("identifier"));
                             }
                             identifier__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -489,6 +501,7 @@ impl<'de> serde::Deserialize<'de> for QueryCurrentEpochResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             CurrentEpoch,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -518,7 +531,7 @@ impl<'de> serde::Deserialize<'de> for QueryCurrentEpochResponse {
                             "currentEpoch" | "current_epoch" => {
                                 Ok(GeneratedField::CurrentEpoch)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -559,6 +572,9 @@ impl<'de> serde::Deserialize<'de> for QueryCurrentEpochResponse {
                                     .0,
                             );
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(QueryCurrentEpochResponse {
@@ -595,7 +611,9 @@ impl<'de> serde::Deserialize<'de> for QueryEpochsInfoRequest {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -620,7 +638,7 @@ impl<'de> serde::Deserialize<'de> for QueryEpochsInfoRequest {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -691,6 +709,7 @@ impl<'de> serde::Deserialize<'de> for QueryEpochsInfoResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Epochs,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -718,7 +737,7 @@ impl<'de> serde::Deserialize<'de> for QueryEpochsInfoResponse {
                     {
                         match value {
                             "epochs" => Ok(GeneratedField::Epochs),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -752,6 +771,9 @@ impl<'de> serde::Deserialize<'de> for QueryEpochsInfoResponse {
                                 return Err(serde::de::Error::duplicate_field("epochs"));
                             }
                             epochs__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }

@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// SendAuthorization allows the grantee to spend up to spend_limit coins from

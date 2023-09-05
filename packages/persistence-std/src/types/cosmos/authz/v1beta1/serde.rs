@@ -41,6 +41,7 @@ impl<'de> serde::Deserialize<'de> for EventGrant {
             MsgTypeUrl,
             Granter,
             Grantee,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -72,7 +73,7 @@ impl<'de> serde::Deserialize<'de> for EventGrant {
                             }
                             "granter" => Ok(GeneratedField::Granter),
                             "grantee" => Ok(GeneratedField::Grantee),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -117,6 +118,9 @@ impl<'de> serde::Deserialize<'de> for EventGrant {
                                 return Err(serde::de::Error::duplicate_field("grantee"));
                             }
                             grantee__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -178,6 +182,7 @@ impl<'de> serde::Deserialize<'de> for EventRevoke {
             MsgTypeUrl,
             Granter,
             Grantee,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -209,7 +214,7 @@ impl<'de> serde::Deserialize<'de> for EventRevoke {
                             }
                             "granter" => Ok(GeneratedField::Granter),
                             "grantee" => Ok(GeneratedField::Grantee),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -254,6 +259,9 @@ impl<'de> serde::Deserialize<'de> for EventRevoke {
                                 return Err(serde::de::Error::duplicate_field("grantee"));
                             }
                             grantee__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -301,6 +309,7 @@ impl<'de> serde::Deserialize<'de> for GenericAuthorization {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Msg,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -328,7 +337,7 @@ impl<'de> serde::Deserialize<'de> for GenericAuthorization {
                     {
                         match value {
                             "msg" => Ok(GeneratedField::Msg),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -359,6 +368,9 @@ impl<'de> serde::Deserialize<'de> for GenericAuthorization {
                                 return Err(serde::de::Error::duplicate_field("msg"));
                             }
                             msg__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -404,6 +416,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Authorization,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -431,7 +444,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                     {
                         match value {
                             "authorization" => Ok(GeneratedField::Authorization),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -464,6 +477,9 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                 );
                             }
                             authorization__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -516,6 +532,7 @@ impl<'de> serde::Deserialize<'de> for Grant {
         enum GeneratedField {
             Authorization,
             Expiration,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -544,7 +561,7 @@ impl<'de> serde::Deserialize<'de> for Grant {
                         match value {
                             "authorization" => Ok(GeneratedField::Authorization),
                             "expiration" => Ok(GeneratedField::Expiration),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -581,6 +598,9 @@ impl<'de> serde::Deserialize<'de> for Grant {
                                 return Err(serde::de::Error::duplicate_field("expiration"));
                             }
                             expiration__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -644,6 +664,7 @@ impl<'de> serde::Deserialize<'de> for GrantAuthorization {
             Grantee,
             Authorization,
             Expiration,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -674,7 +695,7 @@ impl<'de> serde::Deserialize<'de> for GrantAuthorization {
                             "grantee" => Ok(GeneratedField::Grantee),
                             "authorization" => Ok(GeneratedField::Authorization),
                             "expiration" => Ok(GeneratedField::Expiration),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -729,6 +750,9 @@ impl<'de> serde::Deserialize<'de> for GrantAuthorization {
                             }
                             expiration__ = map.next_value()?;
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(GrantAuthorization {
@@ -776,6 +800,7 @@ impl<'de> serde::Deserialize<'de> for GrantQueueItem {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             MsgTypeUrls,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -805,7 +830,7 @@ impl<'de> serde::Deserialize<'de> for GrantQueueItem {
                             "msgTypeUrls" | "msg_type_urls" => {
                                 Ok(GeneratedField::MsgTypeUrls)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -838,6 +863,9 @@ impl<'de> serde::Deserialize<'de> for GrantQueueItem {
                                 );
                             }
                             msg_type_urls__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -890,6 +918,7 @@ impl<'de> serde::Deserialize<'de> for MsgExec {
         enum GeneratedField {
             Grantee,
             Msgs,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -918,7 +947,7 @@ impl<'de> serde::Deserialize<'de> for MsgExec {
                         match value {
                             "grantee" => Ok(GeneratedField::Grantee),
                             "msgs" => Ok(GeneratedField::Msgs),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -953,6 +982,9 @@ impl<'de> serde::Deserialize<'de> for MsgExec {
                                 return Err(serde::de::Error::duplicate_field("msgs"));
                             }
                             msgs__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1003,6 +1035,7 @@ impl<'de> serde::Deserialize<'de> for MsgExecResponse {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Results,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1030,7 +1063,7 @@ impl<'de> serde::Deserialize<'de> for MsgExecResponse {
                     {
                         match value {
                             "results" => Ok(GeneratedField::Results),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1069,6 +1102,9 @@ impl<'de> serde::Deserialize<'de> for MsgExecResponse {
                                     .map(|x| x.0)
                                     .collect(),
                             );
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1128,6 +1164,7 @@ impl<'de> serde::Deserialize<'de> for MsgGrant {
             Granter,
             Grantee,
             Grant,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1157,7 +1194,7 @@ impl<'de> serde::Deserialize<'de> for MsgGrant {
                             "granter" => Ok(GeneratedField::Granter),
                             "grantee" => Ok(GeneratedField::Grantee),
                             "grant" => Ok(GeneratedField::Grant),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1200,6 +1237,9 @@ impl<'de> serde::Deserialize<'de> for MsgGrant {
                             }
                             grant__ = map.next_value()?;
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(MsgGrant {
@@ -1238,7 +1278,9 @@ impl<'de> serde::Deserialize<'de> for MsgGrantResponse {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -1263,7 +1305,7 @@ impl<'de> serde::Deserialize<'de> for MsgGrantResponse {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -1342,6 +1384,7 @@ impl<'de> serde::Deserialize<'de> for MsgRevoke {
             Granter,
             Grantee,
             MsgTypeUrl,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1373,7 +1416,7 @@ impl<'de> serde::Deserialize<'de> for MsgRevoke {
                             "msgTypeUrl" | "msg_type_url" => {
                                 Ok(GeneratedField::MsgTypeUrl)
                             }
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1416,6 +1459,9 @@ impl<'de> serde::Deserialize<'de> for MsgRevoke {
                             }
                             msg_type_url__ = Some(map.next_value()?);
                         }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                        }
                     }
                 }
                 Ok(MsgRevoke {
@@ -1454,7 +1500,9 @@ impl<'de> serde::Deserialize<'de> for MsgRevokeResponse {
     {
         const FIELDS: &[&str] = &[];
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            __SkipField__,
+        }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
                 deserializer: D,
@@ -1479,7 +1527,7 @@ impl<'de> serde::Deserialize<'de> for MsgRevokeResponse {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        Ok(GeneratedField::__SkipField__)
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -1551,6 +1599,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranteeGrantsRequest {
         enum GeneratedField {
             Grantee,
             Pagination,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1579,7 +1628,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranteeGrantsRequest {
                         match value {
                             "grantee" => Ok(GeneratedField::Grantee),
                             "pagination" => Ok(GeneratedField::Pagination),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1618,6 +1667,9 @@ impl<'de> serde::Deserialize<'de> for QueryGranteeGrantsRequest {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
                             pagination__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1671,6 +1723,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranteeGrantsResponse {
         enum GeneratedField {
             Grants,
             Pagination,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1699,7 +1752,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranteeGrantsResponse {
                         match value {
                             "grants" => Ok(GeneratedField::Grants),
                             "pagination" => Ok(GeneratedField::Pagination),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1738,6 +1791,9 @@ impl<'de> serde::Deserialize<'de> for QueryGranteeGrantsResponse {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
                             pagination__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1791,6 +1847,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranterGrantsRequest {
         enum GeneratedField {
             Granter,
             Pagination,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1819,7 +1876,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranterGrantsRequest {
                         match value {
                             "granter" => Ok(GeneratedField::Granter),
                             "pagination" => Ok(GeneratedField::Pagination),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1858,6 +1915,9 @@ impl<'de> serde::Deserialize<'de> for QueryGranterGrantsRequest {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
                             pagination__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -1911,6 +1971,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranterGrantsResponse {
         enum GeneratedField {
             Grants,
             Pagination,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -1939,7 +2000,7 @@ impl<'de> serde::Deserialize<'de> for QueryGranterGrantsResponse {
                         match value {
                             "grants" => Ok(GeneratedField::Grants),
                             "pagination" => Ok(GeneratedField::Pagination),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -1978,6 +2039,9 @@ impl<'de> serde::Deserialize<'de> for QueryGranterGrantsResponse {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
                             pagination__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -2051,6 +2115,7 @@ impl<'de> serde::Deserialize<'de> for QueryGrantsRequest {
             Grantee,
             MsgTypeUrl,
             Pagination,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -2083,7 +2148,7 @@ impl<'de> serde::Deserialize<'de> for QueryGrantsRequest {
                                 Ok(GeneratedField::MsgTypeUrl)
                             }
                             "pagination" => Ok(GeneratedField::Pagination),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -2135,6 +2200,9 @@ impl<'de> serde::Deserialize<'de> for QueryGrantsRequest {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
                             pagination__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -2190,6 +2258,7 @@ impl<'de> serde::Deserialize<'de> for QueryGrantsResponse {
         enum GeneratedField {
             Grants,
             Pagination,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -2218,7 +2287,7 @@ impl<'de> serde::Deserialize<'de> for QueryGrantsResponse {
                         match value {
                             "grants" => Ok(GeneratedField::Grants),
                             "pagination" => Ok(GeneratedField::Pagination),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -2256,6 +2325,9 @@ impl<'de> serde::Deserialize<'de> for QueryGrantsResponse {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
                             pagination__ = map.next_value()?;
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }

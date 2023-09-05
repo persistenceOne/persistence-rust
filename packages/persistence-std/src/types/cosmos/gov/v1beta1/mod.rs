@@ -1,4 +1,3 @@
-
 use persistence_std_derive::CosmwasmExt;
 use pbjson;
 /// WeightedVoteOption defines a unit of vote for vote split.

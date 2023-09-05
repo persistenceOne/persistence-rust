@@ -34,6 +34,7 @@ impl<'de> serde::Deserialize<'de> for Coin {
         enum GeneratedField {
             Denom,
             Amount,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -62,7 +63,7 @@ impl<'de> serde::Deserialize<'de> for Coin {
                         match value {
                             "denom" => Ok(GeneratedField::Denom),
                             "amount" => Ok(GeneratedField::Amount),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -97,6 +98,9 @@ impl<'de> serde::Deserialize<'de> for Coin {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
                             amount__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -146,6 +150,7 @@ impl<'de> serde::Deserialize<'de> for DecCoin {
         enum GeneratedField {
             Denom,
             Amount,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -174,7 +179,7 @@ impl<'de> serde::Deserialize<'de> for DecCoin {
                         match value {
                             "denom" => Ok(GeneratedField::Denom),
                             "amount" => Ok(GeneratedField::Amount),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -209,6 +214,9 @@ impl<'de> serde::Deserialize<'de> for DecCoin {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
                             amount__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -251,6 +259,7 @@ impl<'de> serde::Deserialize<'de> for DecProto {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Dec,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -278,7 +287,7 @@ impl<'de> serde::Deserialize<'de> for DecProto {
                     {
                         match value {
                             "dec" => Ok(GeneratedField::Dec),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -306,6 +315,9 @@ impl<'de> serde::Deserialize<'de> for DecProto {
                                 return Err(serde::de::Error::duplicate_field("dec"));
                             }
                             dec__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
@@ -347,6 +359,7 @@ impl<'de> serde::Deserialize<'de> for IntProto {
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Int,
+            __SkipField__,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(
@@ -374,7 +387,7 @@ impl<'de> serde::Deserialize<'de> for IntProto {
                     {
                         match value {
                             "int" => Ok(GeneratedField::Int),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                            _ => Ok(GeneratedField::__SkipField__),
                         }
                     }
                 }
@@ -402,6 +415,9 @@ impl<'de> serde::Deserialize<'de> for IntProto {
                                 return Err(serde::de::Error::duplicate_field("int"));
                             }
                             int__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::__SkipField__ => {
+                            let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
                     }
                 }
