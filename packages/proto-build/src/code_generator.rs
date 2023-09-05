@@ -67,7 +67,7 @@ impl CodeGenerator {
         self.exclude_unsupported_module();
         self.transform();
         self.generate_mod_file();
-        self.fmt();
+        // self.fmt();
 
         info!(
             "✨  [{}] Library is successfully generated!",

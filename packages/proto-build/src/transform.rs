@@ -108,9 +108,10 @@ fn transform_module(
 fn prepend(items: Vec<Item>) -> Vec<Item> {
     let mut items = items;
 
-    let mut prepending_items = vec![syn::parse_quote! {
-        use persistence_std_derive::CosmwasmExt;
-    }];
+    let mut prepending_items = vec![
+        syn::parse_quote! { use persistence_std_derive::CosmwasmExt;},
+        syn::parse_quote! { use pbjson; }
+    ];
 
     items.splice(0..0, prepending_items.drain(..));
     items
@@ -170,7 +171,13 @@ fn transform_items(
             }),
 
             // This is a temporary hack to fix the issue with clashing stake authorization validators
-            Item::Mod(m) => Item::Mod(transformers::fix_clashing_stake_authorization_validators(m)),
+            Item::Mod(m) => Item::Mod({
+                let e = transformers::fix_clashing_stake_authorization_validators(m);
+                transformers::fix_serde_mod_remove(e)
+            }),
+            Item::Macro(m) => Item::Macro(transformers::fix_serde_include_macro(
+                m,
+            )),
 
             i => i,
         })

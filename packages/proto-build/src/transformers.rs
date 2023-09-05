@@ -10,6 +10,7 @@ use prost_types::{
 use quote::{format_ident, quote};
 use regex::Regex;
 use syn::ItemEnum;
+use syn::ItemMacro;
 use syn::ItemMod;
 use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemStruct, Type};
 
@@ -115,7 +116,7 @@ pub fn append_attrs_struct(
     let deprecated = get_deprecation(src, &s.ident, descriptor);
 
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)] },
+        syn::parse_quote! { #[derive(::schemars::JsonSchema, CosmwasmExt)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
     ]);
 
@@ -482,6 +483,46 @@ pub fn append_querier(
     };
 
     vec![items, querier].concat()
+}
+
+
+pub fn fix_serde_include_macro(input: ItemMacro) -> ItemMacro {
+
+    if input.mac.path.segments.first().unwrap().ident != "include" {
+        return input;
+    }
+
+    // validate that the input must end with serde.rs
+    if !input.mac.tokens.to_string().ends_with("serde.rs\"") {
+        return input;
+    }
+
+    let mut tokens = input.mac.tokens.clone().into_iter();
+    // let mut new_tokens = vec!["serde.rs"];
+
+    return ItemMacro {
+        mac: syn::Macro {
+            tokens: parse_quote! {
+                "serde.rs"
+            },
+            ..input.mac
+        },
+        ..input
+    };
+}
+
+
+// we are not supposed to add serde.rs as a mode, remove the mod
+pub fn fix_serde_mod_remove(input: ItemMod) -> ItemMod {
+
+    if input.ident != "serde" {
+        return input;
+    }
+
+    return ItemMod {
+        content: None,
+        ..input
+    };
 }
 
 /// This is a hack to fix a clashing name in the stake_authorization module
