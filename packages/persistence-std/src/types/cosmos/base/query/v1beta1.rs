@@ -61,6 +61,9 @@ pub struct PageResponse {
     /// query the next page most efficiently. It will be empty if
     /// there are no more results.
     #[prost(bytes = "vec", tag = "1")]
+    #[serde(
+        deserialize_with = "crate::serde::as_map::deserialize"
+    )]
     pub next_key: ::prost::alloc::vec::Vec<u8>,
     /// total is total number of results available if PageRequest.count_total
     /// was set, its value is undefined otherwise

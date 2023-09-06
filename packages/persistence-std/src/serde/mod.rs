@@ -35,6 +35,15 @@ pub mod as_map {
 
         match value {
             Value::Bytes(b) => Ok(T::from(b)),
+            Value::Option(o) => match o {
+                Some(b) => {
+                    // convert this to json string
+                    let s = serde_json_wasm::to_string(&b).unwrap();
+                    Ok(T::from(s.as_bytes().to_vec()))
+                },
+                None => Ok(T::from(vec![])),
+            },
+            Value::Unit => Ok(T::from(vec![])),
             _ => {
                 // convert this to jsons string
                 let s = serde_json_wasm::to_string(&value).unwrap();
