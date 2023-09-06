@@ -3,6 +3,8 @@ use std::path::Path;
 
 use heck::ToSnakeCase;
 use heck::ToUpperCamelCase;
+use itertools::Itertools;
+use proc_macro2::Span;
 use proc_macro2::{Group, TokenStream as TokenStream2, TokenTree};
 use prost_types::{
     DescriptorProto, EnumDescriptorProto, FileDescriptorSet, ServiceDescriptorProto,
@@ -12,6 +14,8 @@ use regex::Regex;
 use syn::ItemEnum;
 use syn::ItemMacro;
 use syn::ItemMod;
+
+
 use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemStruct, Type};
 
 /// Regex substitutions to apply to the prost-generated output
@@ -116,7 +120,7 @@ pub fn append_attrs_struct(
     let deprecated = get_deprecation(src, &s.ident, descriptor);
 
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(::schemars::JsonSchema, CosmwasmExt)] },
+        syn::parse_quote! { #[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
     ]);
 
@@ -135,7 +139,7 @@ pub fn append_attrs_struct(
 pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSet) -> ItemEnum {
     let mut e = e.clone();
     let deprecated = get_deprecation(src, &e.ident, descriptor);
-
+    
     e.attrs.append(&mut vec![
         syn::parse_quote! { #[derive(::schemars::JsonSchema)] },
     ]);
@@ -146,6 +150,55 @@ pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSe
     }
 
     e
+}
+
+// this function takes input of a prost generated enum type that is
+// by default parsed as an i32
+// It generates a serialization and deserialization mod for the enum
+// which can deserializee from either:
+// 1. i32
+// 2. string value of enum (case insensitive)
+// and serializes it by default to string value of enum uppercase
+pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
+
+    let enum_name_ident = s.ident.clone();
+    let enum_name = s.ident.to_string();
+    // convert to camel case
+    let enum_name_camel_case = enum_name.to_snake_case();
+    // add serde to enum end
+    let enum_name_camel_case_serde = format!("{}_serde", enum_name_camel_case);
+    let mod_name_ident = Ident::new(&enum_name_camel_case_serde, Span::call_site());
+
+    let item = parse_quote!(
+        pub mod #mod_name_ident {
+            use serde::{Serializer, Deserializer, Deserialize};
+            use std::fmt::Display;
+
+            use super::#enum_name_ident;
+
+            pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+            where
+                T: From<#enum_name_ident>,
+                D: Deserializer<'de>,
+            {
+                let s = String::deserialize(deserializer)?;
+                let enum_value = #enum_name_ident::from_str_name(&s).unwrap();
+
+                let int_value: T = enum_value.into();
+                return Ok(int_value);
+            }
+
+            pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+            where
+                S: Serializer
+            {
+                let s: #enum_name_ident = #enum_name_ident::from_i32(*value).unwrap();
+                serializer.serialize_str(s.as_str_name())
+            }
+        }
+    );
+
+    Item::Mod(item)
 }
 
 pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
@@ -169,6 +222,44 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
                 parse_quote!(usize),
             ];
 
+            // print if the attr contains word `enumeration`
+            let mut enum_fqn = None;
+            
+            for attr in field.attrs.iter() {
+                if attr.path.is_ident("prost") && attr.tokens.to_string().contains("enumeration") {
+                    // get token after `enumeration` which should be the enum name
+                    let mut tokens = attr.tokens.clone().into_iter();
+
+                    // println!("HERE TOKENS: {:?}", tokens);
+
+                    let mut new_iter = attr.tokens.clone().into_iter();
+
+                    // get the first group
+                    let group_item: TokenTree = new_iter.next().unwrap();
+                    
+                    if let TokenTree::Group(g) = group_item {
+                        let mut stream = g.stream().into_iter();
+                        while let Some(token) = stream.next() {
+                            println!("token: {:?}", token);
+                            match token {
+                                TokenTree::Literal(literal) => {
+                                    enum_fqn = Some(literal.to_string());
+                                    // remove the quotes
+                                    enum_fqn = enum_fqn.map(|s| s.replace("\"", ""));
+                                    println!("enum_name: {:?}", enum_fqn);
+                                    break;
+                                }
+                                _ => {}
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            // println!("enum_name: {:?}", enum_name);
+
             if int_types.contains(&field.ty) {
                 let from_str: syn::Attribute = parse_quote! {
                     #[serde(
@@ -176,7 +267,33 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
                         deserialize_with = "crate::serde::as_str::deserialize"
                     )]
                 };
-                field.attrs.append(&mut vec![from_str]);
+
+               
+
+                if let Some(enum_fqn) = enum_fqn {
+
+                    // find the module names in the enum and separate them with ::
+                    let enum_name_snake_case = enum_fqn.split("::")
+                        .map(|s| s.to_snake_case())
+                        .join("::");
+
+                    // add serde to enum end
+                    let enum_name_snake_case_serde = format!("{}_serde", enum_name_snake_case);
+
+                    let serialize_with_str = format!("{}::serialize", enum_name_snake_case_serde);
+                    let deserialize_with_str = format!("{}::deserialize", enum_name_snake_case_serde);
+
+                    let from_str_enum: syn::Attribute = parse_quote! {
+                        #[serde(
+                            serialize_with = #serialize_with_str,
+                            deserialize_with = #deserialize_with_str
+                        )]
+                    };
+                    field.attrs.append(&mut vec![from_str_enum]);
+                } else {
+                    field.attrs.append(&mut vec![from_str]);
+                }
+
                 field
             } else {
                 field

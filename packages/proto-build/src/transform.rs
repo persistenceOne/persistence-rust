@@ -116,7 +116,7 @@ fn prepend(items: Vec<Item>) -> Vec<Item> {
 
     let mut prepending_items = vec![
         syn::parse_quote! { use persistence_std_derive::CosmwasmExt;},
-        syn::parse_quote! { use pbjson; }
+        // syn::parse_quote! { use pbjson; }
     ];
 
     items.splice(0..0, prepending_items.drain(..));
@@ -189,8 +189,8 @@ fn transform_items(
             }),
 
             Item::Enum(e) => Item::Enum({
-                let e = transformers::add_derive_eq_enum(&e);
-                transformers::append_attrs_enum(src, &e, descriptor)
+                    let e = transformers::add_derive_eq_enum(&e);
+                    transformers::append_attrs_enum(src, &e, descriptor)
             }),
 
             // This is a temporary hack to fix the issue with clashing stake authorization validators
@@ -203,6 +203,16 @@ fn transform_items(
             )),
 
             i => i,
+        })
+        .flat_map(|i| {
+            let mut items = vec![i];
+            // parse only enum
+            if let Some(Item::Enum(e)) = items.last() {
+                let serde_mod = transformers::generate_serde_for_enum(e);
+                items.push(serde_mod);
+            }
+
+            items
         })
         // TODO: Remove this temporary hack when cosmos & tendermint code gen is supported
         .map(remove_struct_fields_that_depends_on_tendermint_proto)

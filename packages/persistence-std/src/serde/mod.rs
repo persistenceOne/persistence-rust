@@ -20,3 +20,27 @@ pub mod as_str {
         serializer.serialize_str(&value.to_string())
     }
 }
+
+
+pub mod as_map {
+    use serde::{Deserialize, Deserializer};
+    use serde_cw_value::Value;
+
+    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    where
+        T: From<Vec<u8>>,
+        D: Deserializer<'de>,
+    {
+        let value = Value::deserialize(deserializer)?;
+
+        match value {
+            Value::Bytes(b) => Ok(T::from(b)),
+            _ => {
+                // convert this to jsons string
+                let s = serde_json_wasm::to_string(&value).unwrap();
+                Ok(T::from(s.as_bytes().to_vec()))
+            }
+        }
+
+    }
+}

@@ -182,9 +182,6 @@ impl CodeGenerator {
             let proto_path = &self.root.join(&project.project_dir).join("proto");
 
             let mut cmd = Command::new("buf");
-            
-            println!("buf_root: {:?}", buf_root);
-            println!("buf_gen_template: {:?}", buf_gen_template);
 
             cmd.arg("generate")
                 .arg(buf_root.to_string_lossy().to_string())
@@ -199,9 +196,6 @@ impl CodeGenerator {
                         .arg(proto_path.join(project.name.clone()).join(include_mod));
                 }
             }
-
-            let cmd_str = format!("{:?}", cmd);
-            println!("cmd_str: {:?}", cmd_str);
 
             let exit_status = cmd.spawn().unwrap().wait().unwrap();
 

@@ -1,4 +1,4 @@
-use persistence_std::{types::{cosmwasm::wasm::v1::MsgExecuteContract, cosmos::gov::v1::QueryProposalsResponse}, shim::Any};
+use persistence_std::{types::{cosmwasm::wasm::v1::MsgExecuteContract, cosmos::gov::v1::{QueryProposalsResponse, QueryProposalRequest, QueryProposalsRequest, ProposalStatus}}, shim::Any};
 
 
 #[test]
@@ -15,5 +15,22 @@ pub fn json_deserialization_fix_test() {
     assert_eq!(str, r#"{"resume_create_pool":{"pool_creation_request_id":1}}"#);
 
     // str.as_bytes().to_vec();
+
+}
+
+#[test]
+pub fn enum_serde_test() {
+    let query = QueryProposalsRequest {
+        proposal_status: ProposalStatus::DepositPeriod.into(),
+        voter: "".to_string(),
+        depositor: "".to_string(),
+        pagination: None,
+    };
+
+    let json = serde_json_wasm::to_string(&query).unwrap();
+    println!("{}", json);
+    let query2: QueryProposalsRequest = serde_json_wasm::from_str(&json).unwrap();
+
+    assert_eq!(query, query2);
 
 }
