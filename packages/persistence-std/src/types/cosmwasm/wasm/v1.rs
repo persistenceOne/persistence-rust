@@ -1447,7 +1447,6 @@ pub struct MsgExecuteContract {
         super::super::super::cosmos::base::v1beta1::Coin,
     >,
 }
-
 /// MsgExecuteContractResponse returns execution result data.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, Eq, ::prost::Message)]

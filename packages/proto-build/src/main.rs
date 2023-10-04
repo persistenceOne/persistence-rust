@@ -77,9 +77,9 @@ pub fn generate() {
         version: COSMOS_SDK_REV.to_string(),
         project_dir: COSMOS_SDK_DIR.to_string(),
         include_mods: vec![
-            // "auth".to_string(),
-            // "authz".to_string(),
-            // "bank".to_string(),
+            "auth".to_string(),
+            "authz".to_string(),
+            "bank".to_string(),
             "base".to_string(),
             "gov".to_string(),
             // "feegrant".to_string(),
