@@ -1,6 +1,6 @@
 [package]
 name = "persistence-std"
-version = "1.0.0-beta1"
+version = "1.0.0-beta2"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "Standard library for Persistence chain modules with CosmWasm support included"
