@@ -1,7 +1,15 @@
 use persistence_std_derive::CosmwasmExt;
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.epochs.v1beta1.EpochInfo")]
 pub struct EpochInfo {
     #[prost(string, tag = "1")]
@@ -29,16 +37,32 @@ pub struct EpochInfo {
 }
 /// GenesisState defines the epochs module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.epochs.v1beta1.GenesisState")]
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
     pub epochs: ::prost::alloc::vec::Vec<EpochInfo>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.epochs.v1beta1.QueryEpochsInfoRequest")]
 #[proto_query(
     path = "/persistence.epochs.v1beta1.Query/EpochInfos",
@@ -46,16 +70,32 @@ pub struct GenesisState {
 )]
 pub struct QueryEpochsInfoRequest {}
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.epochs.v1beta1.QueryEpochsInfoResponse")]
 pub struct QueryEpochsInfoResponse {
     #[prost(message, repeated, tag = "1")]
     pub epochs: ::prost::alloc::vec::Vec<EpochInfo>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.epochs.v1beta1.QueryCurrentEpochRequest")]
 #[proto_query(
     path = "/persistence.epochs.v1beta1.Query/CurrentEpoch",
@@ -66,8 +106,16 @@ pub struct QueryCurrentEpochRequest {
     pub identifier: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.epochs.v1beta1.QueryCurrentEpochResponse")]
 pub struct QueryCurrentEpochResponse {
     #[prost(int64, tag = "1")]
@@ -84,18 +132,13 @@ impl<'a, Q: cosmwasm_std::CustomQuery> EpochsQuerier<'a, Q> {
     pub fn new(querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>) -> Self {
         Self { querier }
     }
-    pub fn epoch_infos(
-        &self,
-    ) -> Result<QueryEpochsInfoResponse, cosmwasm_std::StdError> {
+    pub fn epoch_infos(&self) -> Result<QueryEpochsInfoResponse, cosmwasm_std::StdError> {
         QueryEpochsInfoRequest {}.query(self.querier)
     }
     pub fn current_epoch(
         &self,
         identifier: ::prost::alloc::string::String,
     ) -> Result<QueryCurrentEpochResponse, cosmwasm_std::StdError> {
-        QueryCurrentEpochRequest {
-            identifier,
-        }
-            .query(self.querier)
+        QueryCurrentEpochRequest { identifier }.query(self.querier)
     }
 }

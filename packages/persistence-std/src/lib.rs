@@ -5,7 +5,6 @@
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
 // pub const PERSISTENCE_VERSION: &str = include_str!("types/");
-
 mod serde;
 pub mod shim;
 

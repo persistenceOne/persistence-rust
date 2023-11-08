@@ -172,7 +172,7 @@ pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
     let item = parse_quote!(
         pub mod #mod_name_ident {
             use serde::{Serializer, Deserializer, Deserialize};
-            use std::fmt::Display;
+            // use std::fmt::Display;
 
             use super::#enum_name_ident;
 
@@ -228,9 +228,6 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
             for attr in field.attrs.iter() {
                 if attr.path.is_ident("prost") && attr.tokens.to_string().contains("enumeration") {
                     // get token after `enumeration` which should be the enum name
-                    let mut tokens = attr.tokens.clone().into_iter();
-
-                    // println!("HERE TOKENS: {:?}", tokens);
 
                     let mut new_iter = attr.tokens.clone().into_iter();
 
@@ -240,13 +237,11 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
                     if let TokenTree::Group(g) = group_item {
                         let mut stream = g.stream().into_iter();
                         while let Some(token) = stream.next() {
-                            println!("token: {:?}", token);
                             match token {
                                 TokenTree::Literal(literal) => {
                                     enum_fqn = Some(literal.to_string());
                                     // remove the quotes
                                     enum_fqn = enum_fqn.map(|s| s.replace("\"", ""));
-                                    println!("enum_name: {:?}", enum_fqn);
                                     break;
                                 }
                                 _ => {}
@@ -257,8 +252,6 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
                     break;
                 }
             }
-
-            // println!("enum_name: {:?}", enum_name);
 
             if int_types.contains(&field.ty) {
                 let from_str: syn::Attribute = parse_quote! {
@@ -613,9 +606,6 @@ pub fn fix_serde_include_macro(input: ItemMacro) -> ItemMacro {
     if !input.mac.tokens.to_string().ends_with("serde.rs\"") {
         return input;
     }
-
-    let mut tokens = input.mac.tokens.clone().into_iter();
-    // let mut new_tokens = vec!["serde.rs"];
 
     return ItemMacro {
         mac: syn::Macro {

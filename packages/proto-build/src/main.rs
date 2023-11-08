@@ -11,12 +11,12 @@ use proto_build::{
 };
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.47.3-lsm4";
+const COSMOS_SDK_REV: &str = "v0.47.3-lsm5";
 
 /// The persistence sdk commit or tag to be cloned and used to build the proto files
 const PERSISTENCE_SDK_REV: &str = "v2.1.1";
 
-const PSTAKE_NATIVE_REV: &str = "v2.2.3";
+const PSTAKE_NATIVE_REV: &str = "v2.5.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
 const WASMD_REV: &str = "v0.41.0";

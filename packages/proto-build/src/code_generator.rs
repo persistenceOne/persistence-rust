@@ -67,7 +67,7 @@ impl CodeGenerator {
         self.exclude_unsupported_module();
         self.transform();
         self.generate_mod_file();
-        // self.fmt();
+        self.fmt();
 
         info!(
             "✨  [{}] Library is successfully generated!",
@@ -168,7 +168,7 @@ impl CodeGenerator {
                         .unwrap_or(false);
 
                     // HACK: ignore core/internal for codegen of cosmos-sdk
-                    let parent = e.path().parent().unwrap().clone().to_path_buf().to_str().unwrap().to_string();
+                    let parent = e.path().parent().unwrap().to_path_buf().to_str().unwrap().to_string();
                     for skip_path in &skip_paths {
                         if parent.ends_with(skip_path) {
                             return false;

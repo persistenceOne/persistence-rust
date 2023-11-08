@@ -116,7 +116,6 @@ fn prepend(items: Vec<Item>) -> Vec<Item> {
 
     let mut prepending_items = vec![
         syn::parse_quote! { use persistence_std_derive::CosmwasmExt;},
-        // syn::parse_quote! { use pbjson; }
     ];
 
     items.splice(0..0, prepending_items.drain(..));
@@ -166,7 +165,6 @@ fn transform_items(
         Item::Mod(m) => {
             let ident = m.ident;
 
-            println!("\n\n\nident: {}", ident);
             if ident != "serde" {
                 return true
             }
@@ -229,7 +227,13 @@ fn transform_nested_mod(
 ) -> Item {
     match i.clone() {
         Item::Mod(m) => {
-            let parent = &m.ident.to_string().to_upper_camel_case();
+            let ident = m.ident.to_string();
+            if ident.ends_with("_serde") {
+                // don't transform serde mod
+                return i;
+            }
+            let parent = &ident.to_upper_camel_case();
+
             let content = m.content.map(|(brace, items)| {
                 (
                     brace,

@@ -2,8 +2,16 @@ use persistence_std_derive::CosmwasmExt;
 /// Params defines the parameters for the oracle module.
 /// <https://classic-docs.terra.money/docs/develop/module-specifications/spec-oracle.html#parameters>
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.Params")]
 pub struct Params {
     #[prost(uint64, tag = "1")]
@@ -37,8 +45,16 @@ pub struct Params {
 }
 /// Denom - the object to hold configurations of each denom
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.Denom")]
 pub struct Denom {
     #[prost(string, tag = "1")]
@@ -58,8 +74,16 @@ pub struct Denom {
 /// which is formatted as hex string in SHA256("{salt}:{exchange
 /// rate}{denom},...,{exchange rate}{denom}:{voter}")
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.AggregateExchangeRatePrevote")]
 pub struct AggregateExchangeRatePrevote {
     #[prost(string, tag = "1")]
@@ -76,8 +100,16 @@ pub struct AggregateExchangeRatePrevote {
 /// AggregateExchangeRateVote - struct for voting on
 /// the exchange rates of USD denominated in various assets.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.AggregateExchangeRateVote")]
 pub struct AggregateExchangeRateVote {
     #[prost(message, repeated, tag = "1")]
@@ -87,8 +119,16 @@ pub struct AggregateExchangeRateVote {
 }
 /// ExchangeRateTuple - struct to store interpreted exchange rates data to store
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.ExchangeRateTuple")]
 pub struct ExchangeRateTuple {
     #[prost(string, tag = "1")]
@@ -98,8 +138,16 @@ pub struct ExchangeRateTuple {
 }
 /// GenesisState defines the oracle module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.GenesisState")]
 pub struct GenesisState {
     #[prost(message, optional, tag = "1")]
@@ -111,20 +159,24 @@ pub struct GenesisState {
     #[prost(message, repeated, tag = "4")]
     pub miss_counters: ::prost::alloc::vec::Vec<MissCounter>,
     #[prost(message, repeated, tag = "5")]
-    pub aggregate_exchange_rate_prevotes: ::prost::alloc::vec::Vec<
-        AggregateExchangeRatePrevote,
-    >,
+    pub aggregate_exchange_rate_prevotes: ::prost::alloc::vec::Vec<AggregateExchangeRatePrevote>,
     #[prost(message, repeated, tag = "6")]
-    pub aggregate_exchange_rate_votes: ::prost::alloc::vec::Vec<
-        AggregateExchangeRateVote,
-    >,
+    pub aggregate_exchange_rate_votes: ::prost::alloc::vec::Vec<AggregateExchangeRateVote>,
 }
 /// FeederDelegation is the address for where oracle feeder authority are
 /// delegated to. By default this struct is only used at genesis to feed in
 /// default feeder addresses.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.FeederDelegation")]
 pub struct FeederDelegation {
     #[prost(string, tag = "1")]
@@ -136,8 +188,16 @@ pub struct FeederDelegation {
 /// oracle module's genesis state. It stores the number of vote periods missed by a validator
 /// in a slash window.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.MissCounter")]
 pub struct MissCounter {
     #[prost(string, tag = "1")]
@@ -152,8 +212,16 @@ pub struct MissCounter {
 /// QueryExchangeRateRequest is the request type for the Query/ExchangeRate RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryExchangeRateRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/ExchangeRate",
@@ -167,8 +235,16 @@ pub struct QueryExchangeRateRequest {
 /// QueryExchangeRateResponse is the request type for the Query/ExchangeRate RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryExchangeRateResponse")]
 pub struct QueryExchangeRateResponse {
     /// denom defines the denomination to query for.
@@ -178,8 +254,16 @@ pub struct QueryExchangeRateResponse {
 /// QueryAllExchangeRatesRequest is the request type for the Query/ExchangeRate RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAllExchangeRatesRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/AllExchangeRates",
@@ -189,24 +273,37 @@ pub struct QueryAllExchangeRatesRequest {}
 /// QueryAllExchangeRatesResponse is response type for the
 /// Query/ExchangeRates RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAllExchangeRatesResponse")]
 pub struct QueryAllExchangeRatesResponse {
     /// exchange_rates defines a list of the exchange rate for all whitelisted
     /// denoms.
     #[prost(message, repeated, tag = "1")]
-    pub exchange_rates: ::prost::alloc::vec::Vec<
-        super::super::super::cosmos::base::v1beta1::DecCoin,
-    >,
+    pub exchange_rates:
+        ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::DecCoin>,
 }
 /// QueryActiveExchangeRatesRequest is the request type for the Query/ActiveExchangeRates RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
-#[proto_message(
-    type_url = "/persistence.oracle.v1beta1.QueryActiveExchangeRatesRequest"
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
+#[proto_message(type_url = "/persistence.oracle.v1beta1.QueryActiveExchangeRatesRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/ActiveExchangeRates",
     response_type = QueryActiveExchangeRatesResponse
@@ -215,11 +312,17 @@ pub struct QueryActiveExchangeRatesRequest {}
 /// QueryActiveExchangeRatesResponse is response type for the
 /// Query/ActiveExchangeRates RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
-#[proto_message(
-    type_url = "/persistence.oracle.v1beta1.QueryActiveExchangeRatesResponse"
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
+#[proto_message(type_url = "/persistence.oracle.v1beta1.QueryActiveExchangeRatesResponse")]
 pub struct QueryActiveExchangeRatesResponse {
     /// activeRates defines a list of the denomination which oracle prices aggreed
     /// upon.
@@ -229,8 +332,16 @@ pub struct QueryActiveExchangeRatesResponse {
 /// QueryFeederDelegationRequest is the request type for the
 /// Query/FeederDelegation RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryFeederDelegationRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/FeederDelegation",
@@ -244,8 +355,16 @@ pub struct QueryFeederDelegationRequest {
 /// QueryFeederDelegationResponse is response type for the
 /// Query/FeederDelegation RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryFeederDelegationResponse")]
 pub struct QueryFeederDelegationResponse {
     /// feeder_addr defines the feeder delegation of a validator
@@ -255,8 +374,16 @@ pub struct QueryFeederDelegationResponse {
 /// QueryMissCounterRequest is the request type for the Query/MissCounter RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryMissCounterRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/MissCounter",
@@ -270,8 +397,16 @@ pub struct QueryMissCounterRequest {
 /// QueryMissCounterResponse is response type for the
 /// Query/MissCounter RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryMissCounterResponse")]
 pub struct QueryMissCounterResponse {
     /// miss_counter defines the oracle miss counter of a validator
@@ -285,8 +420,16 @@ pub struct QueryMissCounterResponse {
 /// QueryAggregatePrevoteRequest is the request type for the
 /// Query/AggregatePrevote RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregatePrevoteRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/AggregatePrevote",
@@ -300,8 +443,16 @@ pub struct QueryAggregatePrevoteRequest {
 /// QueryAggregatePrevoteResponse is response type for the
 /// Query/AggregatePrevote RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregatePrevoteResponse")]
 pub struct QueryAggregatePrevoteResponse {
     /// aggregate_prevote defines oracle aggregate prevote submitted by a validator
@@ -312,8 +463,16 @@ pub struct QueryAggregatePrevoteResponse {
 /// QueryAggregatePrevotesRequest is the request type for the
 /// Query/AggregatePrevotes RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregatePrevotesRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/AggregatePrevotes",
@@ -323,8 +482,16 @@ pub struct QueryAggregatePrevotesRequest {}
 /// QueryAggregatePrevotesResponse is response type for the
 /// Query/AggregatePrevotes RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregatePrevotesResponse")]
 pub struct QueryAggregatePrevotesResponse {
     /// aggregate_prevotes defines all oracle aggregate prevotes submitted in the
@@ -335,8 +502,16 @@ pub struct QueryAggregatePrevotesResponse {
 /// QueryAggregateVoteRequest is the request type for the Query/AggregateVote RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregateVoteRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/AggregateVote",
@@ -350,8 +525,16 @@ pub struct QueryAggregateVoteRequest {
 /// QueryAggregateVoteResponse is response type for the
 /// Query/AggregateVote RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregateVoteResponse")]
 pub struct QueryAggregateVoteResponse {
     /// aggregate_vote defines oracle aggregate vote submitted by a validator in
@@ -362,8 +545,16 @@ pub struct QueryAggregateVoteResponse {
 /// QueryAggregateVotesRequest is the request type for the Query/AggregateVotes
 /// RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregateVotesRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/AggregateVotes",
@@ -373,8 +564,16 @@ pub struct QueryAggregateVotesRequest {}
 /// QueryAggregateVotesResponse is response type for the
 /// Query/AggregateVotes RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryAggregateVotesResponse")]
 pub struct QueryAggregateVotesResponse {
     /// aggregate_votes defines all oracle aggregate votes submitted in the current
@@ -384,8 +583,16 @@ pub struct QueryAggregateVotesResponse {
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryParamsRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/Params",
@@ -394,8 +601,16 @@ pub struct QueryAggregateVotesResponse {
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryParamsResponse")]
 pub struct QueryParamsResponse {
     /// params defines the parameters of the module.
@@ -403,8 +618,16 @@ pub struct QueryParamsResponse {
     pub params: ::core::option::Option<Params>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryRewardPoolBalanceRequest")]
 #[proto_query(
     path = "/persistence.oracle.v1beta1.Query/QueryRewardPoolBalance",
@@ -412,24 +635,36 @@ pub struct QueryParamsResponse {
 )]
 pub struct QueryRewardPoolBalanceRequest {}
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.QueryRewardPoolBalanceResponse")]
 pub struct QueryRewardPoolBalanceResponse {
     /// funds left in the reward pool
     #[prost(message, repeated, tag = "1")]
-    pub remaining_funds: ::prost::alloc::vec::Vec<
-        super::super::super::cosmos::base::v1beta1::Coin,
-    >,
+    pub remaining_funds: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 /// MsgAggregateExchangeRatePrevote represents a message to submit an aggregate
 /// exchange rate prevote.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
-#[proto_message(
-    type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRatePrevote"
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
+#[proto_message(type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRatePrevote")]
 pub struct MsgAggregateExchangeRatePrevote {
     #[prost(string, tag = "1")]
     pub hash: ::prost::alloc::string::String,
@@ -441,17 +676,31 @@ pub struct MsgAggregateExchangeRatePrevote {
 /// MsgAggregateExchangeRatePrevoteResponse defines the
 /// Msg/AggregateExchangeRatePrevote response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
-#[proto_message(
-    type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRatePrevoteResponse"
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
+#[proto_message(type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRatePrevoteResponse")]
 pub struct MsgAggregateExchangeRatePrevoteResponse {}
 /// MsgAggregateExchangeRateVote represents a message to submit anaggregate
 /// exchange rate vote.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRateVote")]
 pub struct MsgAggregateExchangeRateVote {
     #[prost(string, tag = "1")]
@@ -466,17 +715,31 @@ pub struct MsgAggregateExchangeRateVote {
 /// MsgAggregateExchangeRateVoteResponse defines the
 /// Msg/AggregateExchangeRateVote response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
-#[proto_message(
-    type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRateVoteResponse"
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
+#[proto_message(type_url = "/persistence.oracle.v1beta1.MsgAggregateExchangeRateVoteResponse")]
 pub struct MsgAggregateExchangeRateVoteResponse {}
 /// MsgDelegateFeedConsent represents a message to delegate oracle voting rights
 /// to another address.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.MsgDelegateFeedConsent")]
 pub struct MsgDelegateFeedConsent {
     #[prost(string, tag = "1")]
@@ -487,30 +750,50 @@ pub struct MsgDelegateFeedConsent {
 /// MsgDelegateFeedConsentResponse defines the Msg/DelegateFeedConsent response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.MsgDelegateFeedConsentResponse")]
 pub struct MsgDelegateFeedConsentResponse {}
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
 #[proto_message(type_url = "/persistence.oracle.v1beta1.MsgAddFundsToRewardPool")]
 pub struct MsgAddFundsToRewardPool {
     #[prost(string, tag = "1")]
     pub from: ::prost::alloc::string::String,
     /// rewards are the coin(s) to add to reward pool
     #[prost(message, repeated, tag = "2")]
-    pub funds: ::prost::alloc::vec::Vec<
-        super::super::super::cosmos::base::v1beta1::Coin,
-    >,
+    pub funds: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 /// MsgAddFundsToRewardPoolResponse
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, Eq, ::prost::Message)]
-#[derive(::serde::Serialize, ::serde::Deserialize, ::schemars::JsonSchema, CosmwasmExt)]
-#[proto_message(
-    type_url = "/persistence.oracle.v1beta1.MsgAddFundsToRewardPoolResponse"
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
+#[proto_message(type_url = "/persistence.oracle.v1beta1.MsgAddFundsToRewardPoolResponse")]
 pub struct MsgAddFundsToRewardPoolResponse {}
 pub struct OracleQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
@@ -539,28 +822,19 @@ impl<'a, Q: cosmwasm_std::CustomQuery> OracleQuerier<'a, Q> {
         &self,
         validator_addr: ::prost::alloc::string::String,
     ) -> Result<QueryFeederDelegationResponse, cosmwasm_std::StdError> {
-        QueryFeederDelegationRequest {
-            validator_addr,
-        }
-            .query(self.querier)
+        QueryFeederDelegationRequest { validator_addr }.query(self.querier)
     }
     pub fn miss_counter(
         &self,
         validator_addr: ::prost::alloc::string::String,
     ) -> Result<QueryMissCounterResponse, cosmwasm_std::StdError> {
-        QueryMissCounterRequest {
-            validator_addr,
-        }
-            .query(self.querier)
+        QueryMissCounterRequest { validator_addr }.query(self.querier)
     }
     pub fn aggregate_prevote(
         &self,
         validator_addr: ::prost::alloc::string::String,
     ) -> Result<QueryAggregatePrevoteResponse, cosmwasm_std::StdError> {
-        QueryAggregatePrevoteRequest {
-            validator_addr,
-        }
-            .query(self.querier)
+        QueryAggregatePrevoteRequest { validator_addr }.query(self.querier)
     }
     pub fn aggregate_prevotes(
         &self,
@@ -571,14 +845,9 @@ impl<'a, Q: cosmwasm_std::CustomQuery> OracleQuerier<'a, Q> {
         &self,
         validator_addr: ::prost::alloc::string::String,
     ) -> Result<QueryAggregateVoteResponse, cosmwasm_std::StdError> {
-        QueryAggregateVoteRequest {
-            validator_addr,
-        }
-            .query(self.querier)
+        QueryAggregateVoteRequest { validator_addr }.query(self.querier)
     }
-    pub fn aggregate_votes(
-        &self,
-    ) -> Result<QueryAggregateVotesResponse, cosmwasm_std::StdError> {
+    pub fn aggregate_votes(&self) -> Result<QueryAggregateVotesResponse, cosmwasm_std::StdError> {
         QueryAggregateVotesRequest {}.query(self.querier)
     }
     pub fn params(&self) -> Result<QueryParamsResponse, cosmwasm_std::StdError> {
