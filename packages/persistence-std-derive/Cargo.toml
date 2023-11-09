@@ -3,7 +3,7 @@ description = "Procedural macro for persistence-std"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 name = "persistence-std-derive"
-version = "1.0.0-beta1"
+version = "1.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
