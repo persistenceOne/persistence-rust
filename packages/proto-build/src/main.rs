@@ -86,6 +86,7 @@ pub fn generate() {
             "staking/v1beta1/genesis.proto".to_string(),
             "staking/v1beta1/staking.proto".to_string(),
             "staking/v1beta1/tx.proto".to_string(),
+            "staking/v1beta1/query.proto".to_string(),
         ],
     };
 
