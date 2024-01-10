@@ -14,7 +14,7 @@ use crate::transformers;
 
 /// Protos belonging to these Protobuf packages will be excluded
 /// (i.e. because they are sourced from `tendermint-proto`)
-const EXCLUDED_PROTO_PACKAGES: &[&str] = &["cosmos_proto", "gogoproto", "google", "tendermint"];
+const EXCLUDED_PROTO_PACKAGES: &[&str] = &["cosmos_proto", "gogoproto", "google"];
 
 pub fn copy_and_transform_all(from_dir: &Path, to_dir: &Path, descriptor: &FileDescriptorSet) {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -116,7 +116,6 @@ fn prepend(items: Vec<Item>) -> Vec<Item> {
 
     let mut prepending_items = vec![
         syn::parse_quote! { use persistence_std_derive::CosmwasmExt;},
-        // syn::parse_quote! { use pbjson; }
     ];
 
     items.splice(0..0, prepending_items.drain(..));
@@ -132,41 +131,34 @@ fn append(
     transformers::append_querier(items, src, nested_mod, descriptor)
 }
 
+fn check_if_enum_is_i32(e: &syn::ItemEnum) -> bool {
+    let mut is_i32 = false;
+
+    for attr in &e.attrs {
+        if attr.path.is_ident("repr") {
+            if let Ok(syn::Meta::List(list)) = attr.parse_meta() {
+                if let Some(syn::NestedMeta::Meta(syn::Meta::Path(path))) = list.nested.first() {
+                    if path.is_ident("i32") {
+                        is_i32 = true;
+                    }
+                }
+            }
+        }
+    }
+
+    is_i32
+}
+
 fn transform_items(
     items: Vec<Item>,
     src: &Path,
     ancestors: &[String],
     descriptor: &FileDescriptorSet,
 ) -> Vec<Item> {
-    // TODO: Remove this temporary hack when cosmos & tendermint code gen is supported
-    let remove_struct_fields_that_depends_on_tendermint_proto = |i: Item| match i.clone() {
-        Item::Struct(s) => {
-            let is_depending_on_tendermint = s.fields.iter().any(|field| {
-                let tt = field.ty.to_token_stream();
-                tt.to_string().contains("tendermint_proto")
-            });
-
-            if is_depending_on_tendermint {
-                let ident = s.ident;
-                Item::Struct(parse_quote! {
-                    /// NOTE: The following type is not implemented due to current limitations of code generator
-                    /// which currently has issue with tendermint_proto.
-                    /// This will be fixed in the upcoming release.
-                    #[allow(dead_code)]
-                    struct #ident {}
-                })
-            } else {
-                Item::Struct(s)
-            }
-        }
-        _ => i,
-    };
-
     let is_not_serde_mod = |i: &Item| match i.clone() {
         Item::Mod(m) => {
             let ident = m.ident;
 
-            println!("\n\n\nident: {}", ident);
             if ident != "serde" {
                 return true
             }
@@ -190,7 +182,13 @@ fn transform_items(
 
             Item::Enum(e) => Item::Enum({
                     let e = transformers::add_derive_eq_enum(&e);
-                    transformers::append_attrs_enum(src, &e, descriptor)
+                    
+                    let is_i32 = check_if_enum_is_i32(&e);
+                    if is_i32 {
+                        transformers::append_attrs_enum(src, &e, descriptor)
+                    } else {
+                        transformers::append_attrs_enum_with_serde(src, &e, descriptor)
+                    }
             }),
 
             // This is a temporary hack to fix the issue with clashing stake authorization validators
@@ -208,14 +206,19 @@ fn transform_items(
             let mut items = vec![i];
             // parse only enum
             if let Some(Item::Enum(e)) = items.last() {
-                let serde_mod = transformers::generate_serde_for_enum(e);
-                items.push(serde_mod);
+                
+                // iterate the atts and find out if this enum is backed by a i32
+                let is_i32 = check_if_enum_is_i32(e);
+                if is_i32 {
+                    let serde_mod = transformers::generate_serde_for_enum_i32(e);
+                    items.push(serde_mod);
+                }
             }
 
             items
         })
         // TODO: Remove this temporary hack when cosmos & tendermint code gen is supported
-        .map(remove_struct_fields_that_depends_on_tendermint_proto)
+        // .map(remove_struct_fields_that_depends_on_tendermint_proto)
         .map(|i: Item| transform_nested_mod(i, src, ancestors, descriptor))
         .filter(|i| is_not_serde_mod(i))
         .collect::<Vec<Item>>()
@@ -229,7 +232,13 @@ fn transform_nested_mod(
 ) -> Item {
     match i.clone() {
         Item::Mod(m) => {
-            let parent = &m.ident.to_string().to_upper_camel_case();
+            let ident = m.ident.to_string();
+            if ident.ends_with("_serde") {
+                // don't transform serde mod
+                return i;
+            }
+            let parent = &ident.to_upper_camel_case();
+
             let content = m.content.map(|(brace, items)| {
                 (
                     brace,

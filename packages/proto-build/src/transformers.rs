@@ -21,7 +21,7 @@ use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemStruct, Type};
 /// Regex substitutions to apply to the prost-generated output
 pub const REPLACEMENTS: &[(&str, &str)] = &[
     // Use `tendermint-proto` proto definitions
-    ("(super::)+tendermint", "tendermint_proto"),
+    // ("(super::)+tendermint", "tendermint_proto"),
     // Feature-gate gRPC client modules
     (
         "/// Generated client implementations.",
@@ -148,9 +148,24 @@ pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSe
         e.attrs
             .append(&mut vec![syn::parse_quote! { #[deprecated] }]);
     }
-
     e
 }
+
+pub fn append_attrs_enum_with_serde(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSet) -> ItemEnum {
+    let mut e = e.clone();
+    let deprecated = get_deprecation(src, &e.ident, descriptor);
+    
+    e.attrs.append(&mut vec![
+        syn::parse_quote! { #[derive(::schemars::JsonSchema, ::serde::Serialize, ::serde::Deserialize)] },
+    ]);
+
+    if deprecated {
+        e.attrs
+            .append(&mut vec![syn::parse_quote! { #[deprecated] }]);
+    }
+    e
+}
+
 
 // this function takes input of a prost generated enum type that is
 // by default parsed as an i32
@@ -159,7 +174,7 @@ pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSe
 // 1. i32
 // 2. string value of enum (case insensitive)
 // and serializes it by default to string value of enum uppercase
-pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
+pub fn generate_serde_for_enum_i32(s: &ItemEnum) -> Item {
 
     let enum_name_ident = s.ident.clone();
     let enum_name = s.ident.to_string();
@@ -172,11 +187,11 @@ pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
     let item = parse_quote!(
         pub mod #mod_name_ident {
             use serde::{Serializer, Deserializer, Deserialize};
-            use std::fmt::Display;
+            // use std::fmt::Display;
 
             use super::#enum_name_ident;
 
-            pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+            pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
             where
                 T: From<#enum_name_ident>,
                 D: Deserializer<'de>,
@@ -188,7 +203,7 @@ pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
                 return Ok(int_value);
             }
 
-            pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+            pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
             where
                 S: Serializer
             {
@@ -228,9 +243,6 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
             for attr in field.attrs.iter() {
                 if attr.path.is_ident("prost") && attr.tokens.to_string().contains("enumeration") {
                     // get token after `enumeration` which should be the enum name
-                    let mut tokens = attr.tokens.clone().into_iter();
-
-                    // println!("HERE TOKENS: {:?}", tokens);
 
                     let mut new_iter = attr.tokens.clone().into_iter();
 
@@ -240,13 +252,11 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
                     if let TokenTree::Group(g) = group_item {
                         let mut stream = g.stream().into_iter();
                         while let Some(token) = stream.next() {
-                            println!("token: {:?}", token);
                             match token {
                                 TokenTree::Literal(literal) => {
                                     enum_fqn = Some(literal.to_string());
                                     // remove the quotes
                                     enum_fqn = enum_fqn.map(|s| s.replace("\"", ""));
-                                    println!("enum_name: {:?}", enum_fqn);
                                     break;
                                 }
                                 _ => {}
@@ -257,8 +267,6 @@ pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
                     break;
                 }
             }
-
-            // println!("enum_name: {:?}", enum_name);
 
             if int_types.contains(&field.ty) {
                 let from_str: syn::Attribute = parse_quote! {
@@ -613,9 +621,6 @@ pub fn fix_serde_include_macro(input: ItemMacro) -> ItemMacro {
     if !input.mac.tokens.to_string().ends_with("serde.rs\"") {
         return input;
     }
-
-    let mut tokens = input.mac.tokens.clone().into_iter();
-    // let mut new_tokens = vec!["serde.rs"];
 
     return ItemMacro {
         mac: syn::Macro {

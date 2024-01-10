@@ -21,7 +21,6 @@ pub mod as_str {
     }
 }
 
-
 pub mod as_map {
     use serde::{Deserialize, Deserializer};
     use serde_cw_value::Value;
@@ -40,7 +39,7 @@ pub mod as_map {
                     // convert this to json string
                     let s = serde_json_wasm::to_string(&b).unwrap();
                     Ok(T::from(s.as_bytes().to_vec()))
-                },
+                }
                 None => Ok(T::from(vec![])),
             },
             Value::Unit => Ok(T::from(vec![])),
@@ -50,6 +49,5 @@ pub mod as_map {
                 Ok(T::from(s.as_bytes().to_vec()))
             }
         }
-
     }
 }

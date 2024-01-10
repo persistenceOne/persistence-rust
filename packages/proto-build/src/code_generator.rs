@@ -10,16 +10,6 @@ use walkdir::WalkDir;
 
 use crate::{mod_gen, transform};
 
-const UNSUPPORTED_MODULE: &[&str] = &[
-    // currently unsupported due to dependency on tendermint-proto
-    "cosmos.base.abci",
-    "cosmos.base.kv",
-    "cosmos.base.reflection",
-    "cosmos.base.store",
-    "cosmos.base.snapshots",
-    "cosmos.base.tendermint",
-];
-
 #[derive(Clone, Debug)]
 pub struct CosmosProject {
     pub name: String,
@@ -27,7 +17,7 @@ pub struct CosmosProject {
     pub project_dir: String,
 
     /// determines which modules to include from the project
-    pub include_mods: Vec<String>,
+    pub exclude_mods: Vec<String>,
 }
 
 pub struct CodeGenerator {
@@ -64,10 +54,10 @@ impl CodeGenerator {
             self.project.name
         );
 
-        self.exclude_unsupported_module();
+        // self.exclude_unsupported_module();
         self.transform();
         self.generate_mod_file();
-        // self.fmt();
+        self.fmt();
 
         info!(
             "✨  [{}] Library is successfully generated!",
@@ -85,26 +75,6 @@ impl CodeGenerator {
             &self.project.version,
             &self.tmp_namespaced_dir(),
         );
-    }
-
-    fn exclude_unsupported_module(&self) {
-        for entry in WalkDir::new(self.tmp_namespaced_dir()) {
-            let entry = entry.unwrap();
-            if entry.file_type().is_file() {
-                let filename = entry
-                    .file_name()
-                    .to_os_string()
-                    .to_str()
-                    .unwrap()
-                    .to_string();
-                if UNSUPPORTED_MODULE
-                    .iter()
-                    .any(|module| filename.contains(module))
-                {
-                    fs::remove_file(entry.path()).unwrap();
-                }
-            }
-        }
     }
 
     fn generate_mod_file(&self) {
@@ -168,7 +138,7 @@ impl CodeGenerator {
                         .unwrap_or(false);
 
                     // HACK: ignore core/internal for codegen of cosmos-sdk
-                    let parent = e.path().parent().unwrap().clone().to_path_buf().to_str().unwrap().to_string();
+                    let parent = e.path().parent().unwrap().to_path_buf().to_str().unwrap().to_string();
                     for skip_path in &skip_paths {
                         if parent.ends_with(skip_path) {
                             return false;
@@ -190,10 +160,10 @@ impl CodeGenerator {
                 .arg("--output")
                 .arg(self.tmp_namespaced_dir().to_string_lossy().to_string());
 
-            if !project.include_mods.is_empty() {
-                for include_mod in project.include_mods.clone() {
-                    cmd.arg("--path")
-                        .arg(proto_path.join(project.name.clone()).join(include_mod));
+            if !project.exclude_mods.is_empty() {
+                for excluded_mod in project.exclude_mods.clone() {
+                    cmd.arg("--exclude-path")
+                        .arg(proto_path.join(project.name.clone()).join(excluded_mod));
                 }
             }
 
@@ -218,10 +188,10 @@ impl CodeGenerator {
                 .arg("-o")
                 .arg(descriptor_file.to_string_lossy().to_string());
 
-            if !project.include_mods.is_empty() {
-                for include_mod in project.include_mods {
-                    cmd.arg("--path")
-                        .arg(proto_path.join(project.name.clone()).join(include_mod));
+            if !project.exclude_mods.is_empty() {
+                for excluded_mod in project.exclude_mods.clone() {
+                    cmd.arg("--exclude-path")
+                        .arg(proto_path.join(project.name.clone()).join(excluded_mod));
                 }
             }
 

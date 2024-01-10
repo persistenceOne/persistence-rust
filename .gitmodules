@@ -13,3 +13,12 @@
 [submodule "dependencies/wasmd"]
 	path = dependencies/wasmd
 	url = https://github.com/CosmWasm/wasmd.git
+[submodule "dependencies/ibc-go"]
+	path = dependencies/ibc-go
+	url = https://github.com/cosmos/ibc-go.git
+[submodule "dependencies/ics23"]
+	path = dependencies/ics23
+	url = https://github.com/cosmos/ics23.git
+[submodule "dependencies/cometbft"]
+	path = dependencies/cometbft
+	url = https://github.com/cometbft/cometbft.git

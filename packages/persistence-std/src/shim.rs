@@ -1,13 +1,12 @@
 use ::serde::{Deserialize, Deserializer, Serialize, Serializer};
 use chrono::{DateTime, NaiveDateTime, Utc};
 use cosmwasm_std::StdResult;
-use serde::{de, ser};
 use serde::de::Visitor;
+use serde::{de, ser};
 
+use prost::Message;
 use std::fmt;
 use std::str::FromStr;
-use prost::Message;
-
 
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
 pub struct Timestamp {
