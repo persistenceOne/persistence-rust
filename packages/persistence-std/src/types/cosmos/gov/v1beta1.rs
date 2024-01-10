@@ -285,7 +285,7 @@ pub enum VoteOption {
 pub mod vote_option_serde {
     use super::VoteOption;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<VoteOption>,
         D: Deserializer<'de>,
@@ -295,7 +295,7 @@ pub mod vote_option_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
@@ -355,7 +355,7 @@ pub enum ProposalStatus {
 pub mod proposal_status_serde {
     use super::ProposalStatus;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<ProposalStatus>,
         D: Deserializer<'de>,
@@ -365,7 +365,7 @@ pub mod proposal_status_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {

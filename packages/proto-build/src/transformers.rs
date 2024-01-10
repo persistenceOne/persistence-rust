@@ -21,7 +21,7 @@ use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemStruct, Type};
 /// Regex substitutions to apply to the prost-generated output
 pub const REPLACEMENTS: &[(&str, &str)] = &[
     // Use `tendermint-proto` proto definitions
-    ("(super::)+tendermint", "tendermint_proto"),
+    // ("(super::)+tendermint", "tendermint_proto"),
     // Feature-gate gRPC client modules
     (
         "/// Generated client implementations.",
@@ -148,9 +148,24 @@ pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSe
         e.attrs
             .append(&mut vec![syn::parse_quote! { #[deprecated] }]);
     }
-
     e
 }
+
+pub fn append_attrs_enum_with_serde(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSet) -> ItemEnum {
+    let mut e = e.clone();
+    let deprecated = get_deprecation(src, &e.ident, descriptor);
+    
+    e.attrs.append(&mut vec![
+        syn::parse_quote! { #[derive(::schemars::JsonSchema, ::serde::Serialize, ::serde::Deserialize)] },
+    ]);
+
+    if deprecated {
+        e.attrs
+            .append(&mut vec![syn::parse_quote! { #[deprecated] }]);
+    }
+    e
+}
+
 
 // this function takes input of a prost generated enum type that is
 // by default parsed as an i32
@@ -159,7 +174,7 @@ pub fn append_attrs_enum(src: &Path, e: &ItemEnum, descriptor: &FileDescriptorSe
 // 1. i32
 // 2. string value of enum (case insensitive)
 // and serializes it by default to string value of enum uppercase
-pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
+pub fn generate_serde_for_enum_i32(s: &ItemEnum) -> Item {
 
     let enum_name_ident = s.ident.clone();
     let enum_name = s.ident.to_string();
@@ -176,7 +191,7 @@ pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
 
             use super::#enum_name_ident;
 
-            pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+            pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
             where
                 T: From<#enum_name_ident>,
                 D: Deserializer<'de>,
@@ -188,7 +203,7 @@ pub fn generate_serde_for_enum(s: &ItemEnum) -> Item {
                 return Ok(int_value);
             }
 
-            pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+            pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
             where
                 S: Serializer
             {

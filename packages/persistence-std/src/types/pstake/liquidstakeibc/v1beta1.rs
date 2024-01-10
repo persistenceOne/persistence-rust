@@ -95,6 +95,9 @@ pub struct HostChain {
     /// host chain flags
     #[prost(message, optional, tag = "16")]
     pub flags: ::core::option::Option<HostChainFlags>,
+    /// non-compoundable chain reward params
+    #[prost(message, optional, tag = "17")]
+    pub reward_params: ::core::option::Option<RewardParams>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
@@ -111,6 +114,26 @@ pub struct HostChain {
 pub struct HostChainFlags {
     #[prost(bool, tag = "1")]
     pub lsm: bool,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.RewardParams")]
+pub struct RewardParams {
+    /// rewards denom on the host chain
+    #[prost(string, tag = "1")]
+    pub denom: ::prost::alloc::string::String,
+    /// entity which will convert rewards to the host denom
+    #[prost(string, tag = "2")]
+    pub destination: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
@@ -145,6 +168,16 @@ pub struct HostChainLsParams {
     ///   Should be used only when HostChainFlag.Lsm == true, orelse default
     #[prost(string, tag = "7")]
     pub lsm_bond_factor: ::prost::alloc::string::String,
+    /// UndelegateEntries
+    #[prost(uint32, tag = "8")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub max_entries: u32,
+    /// amount skew that is acceptable before redelegating
+    #[prost(string, tag = "9")]
+    pub redelegation_acceptable_delta: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
@@ -190,7 +223,7 @@ pub mod ica_account {
     pub mod channel_state_serde {
         use super::ChannelState;
         use serde::{Deserialize, Deserializer, Serializer};
-        pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+        pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
         where
             T: From<ChannelState>,
             D: Deserializer<'de>,
@@ -200,7 +233,7 @@ pub mod ica_account {
             let int_value: T = enum_value.into();
             return Ok(int_value);
         }
-        pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -254,7 +287,8 @@ pub struct Validator {
     /// amount delegated by the module to the validator
     #[prost(string, tag = "4")]
     pub delegated_amount: ::prost::alloc::string::String,
-    /// the validator token exchange rate, total bonded tokens divided by total shares issued
+    /// the validator token exchange rate, total bonded tokens divided by total
+    /// shares issued
     #[prost(string, tag = "5")]
     pub exchange_rate: ::prost::alloc::string::String,
     /// the unbonding epoch number when the validator transitioned into the state
@@ -264,7 +298,8 @@ pub struct Validator {
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub unbonding_epoch: i64,
-    /// whether the validator can accept delegations or not, default true for non-lsm chains
+    /// whether the validator can accept delegations or not, default true for
+    /// non-lsm chains
     #[prost(bool, tag = "7")]
     pub delegable: bool,
 }
@@ -325,7 +360,7 @@ pub mod deposit {
     pub mod deposit_state_serde {
         use super::DepositState;
         use serde::{Deserialize, Deserializer, Serializer};
-        pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+        pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
         where
             T: From<DepositState>,
             D: Deserializer<'de>,
@@ -335,7 +370,7 @@ pub mod deposit {
             let int_value: T = enum_value.into();
             return Ok(int_value);
         }
-        pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -385,11 +420,12 @@ pub struct LsmDeposit {
     #[prost(string, tag = "1")]
     #[serde(alias = "chainID")]
     pub chain_id: ::prost::alloc::string::String,
-    /// this is calculated when liquid staking [lsm_shares * validator_exchange_rate]
+    /// this is calculated when liquid staking [lsm_shares *
+    /// validator_exchange_rate]
     #[prost(string, tag = "2")]
     pub amount: ::prost::alloc::string::String,
-    /// LSM token shares, they are mapped 1:1 with the delegator shares that are tokenized
-    /// <https://github.com/iqlusioninc/cosmos-sdk/pull/19>
+    /// LSM token shares, they are mapped 1:1 with the delegator shares that are
+    /// tokenized <https://github.com/iqlusioninc/cosmos-sdk/pull/19>
     #[prost(string, tag = "3")]
     pub shares: ::prost::alloc::string::String,
     /// LSM token denom
@@ -432,7 +468,7 @@ pub mod lsm_deposit {
     pub mod lsm_deposit_state_serde {
         use super::LsmDepositState;
         use serde::{Deserialize, Deserializer, Serializer};
-        pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+        pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
         where
             T: From<LsmDepositState>,
             D: Deserializer<'de>,
@@ -442,7 +478,7 @@ pub mod lsm_deposit {
             let int_value: T = enum_value.into();
             return Ok(int_value);
         }
-        pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -543,7 +579,7 @@ pub mod unbonding {
     pub mod unbonding_state_serde {
         use super::UnbondingState;
         use serde::{Deserialize, Deserializer, Serializer};
-        pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+        pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
         where
             T: From<UnbondingState>,
             D: Deserializer<'de>,
@@ -553,7 +589,7 @@ pub mod unbonding {
             let int_value: T = enum_value.into();
             return Ok(int_value);
         }
-        pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+        pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
         where
             S: Serializer,
         {
@@ -679,6 +715,107 @@ pub struct KvUpdate {
     pub key: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub value: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.Redelegations")]
+pub struct Redelegations {
+    #[prost(string, tag = "1")]
+    pub chain_i_d: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "2")]
+    pub redelegations:
+        ::prost::alloc::vec::Vec<super::super::super::cosmos::staking::v1beta1::Redelegation>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.RedelegateTx")]
+pub struct RedelegateTx {
+    /// target chain
+    #[prost(string, tag = "1")]
+    #[serde(alias = "chainID")]
+    pub chain_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    #[serde(alias = "ibc_sequenceID")]
+    pub ibc_sequence_id: ::prost::alloc::string::String,
+    /// state of the unbonding during the process
+    #[prost(enumeration = "redelegate_tx::RedelegateTxState", tag = "3")]
+    #[serde(
+        serialize_with = "redelegate_tx::redelegate_tx_state_serde::serialize",
+        deserialize_with = "redelegate_tx::redelegate_tx_state_serde::deserialize"
+    )]
+    pub state: i32,
+}
+/// Nested message and enum types in `RedelegateTx`.
+pub mod redelegate_tx {
+    use persistence_std_derive::CosmwasmExt;
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+    #[repr(i32)]
+    #[derive(::schemars::JsonSchema)]
+    pub enum RedelegateTxState {
+        /// redelegate txn sent
+        RedelegateSent = 0,
+        /// redelegate txn acked
+        RedelegateAcked = 1,
+    }
+    pub mod redelegate_tx_state_serde {
+        use super::RedelegateTxState;
+        use serde::{Deserialize, Deserializer, Serializer};
+        pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
+        where
+            T: From<RedelegateTxState>,
+            D: Deserializer<'de>,
+        {
+            let s = String::deserialize(deserializer)?;
+            let enum_value = RedelegateTxState::from_str_name(&s).unwrap();
+            let int_value: T = enum_value.into();
+            return Ok(int_value);
+        }
+        pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+        {
+            let s: RedelegateTxState = RedelegateTxState::from_i32(*value).unwrap();
+            serializer.serialize_str(s.as_str_name())
+        }
+    }
+    impl RedelegateTxState {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                RedelegateTxState::RedelegateSent => "REDELEGATE_SENT",
+                RedelegateTxState::RedelegateAcked => "REDELEGATE_ACKED",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "REDELEGATE_SENT" => Some(Self::RedelegateSent),
+                "REDELEGATE_ACKED" => Some(Self::RedelegateAcked),
+                _ => None,
+            }
+        }
+    }
 }
 /// GenesisState defines the liquidstakeibc module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1369,6 +1506,80 @@ pub struct QueryExchangeRateResponse {
     #[prost(string, tag = "1")]
     pub rate: ::prost::alloc::string::String,
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.QueryRedelegationsRequest")]
+#[proto_query(
+    path = "/pstake.liquidstakeibc.v1beta1.Query/Redelegations",
+    response_type = QueryRedelegationsResponse
+)]
+pub struct QueryRedelegationsRequest {
+    #[prost(string, tag = "1")]
+    #[serde(alias = "chainID")]
+    pub chain_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.QueryRedelegationsResponse")]
+pub struct QueryRedelegationsResponse {
+    #[prost(message, optional, tag = "1")]
+    pub redelegations: ::core::option::Option<Redelegations>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.QueryRedelegationTxRequest")]
+#[proto_query(
+    path = "/pstake.liquidstakeibc.v1beta1.Query/RedelegationTx",
+    response_type = QueryRedelegationTxResponse
+)]
+pub struct QueryRedelegationTxRequest {
+    #[prost(string, tag = "1")]
+    #[serde(alias = "chainID")]
+    pub chain_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/pstake.liquidstakeibc.v1beta1.QueryRedelegationTxResponse")]
+pub struct QueryRedelegationTxResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub redelegation_tx: ::prost::alloc::vec::Vec<RedelegateTx>,
+}
 pub struct LiquidstakeibcQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }
@@ -1436,5 +1647,17 @@ impl<'a, Q: cosmwasm_std::CustomQuery> LiquidstakeibcQuerier<'a, Q> {
         chain_id: ::prost::alloc::string::String,
     ) -> Result<QueryExchangeRateResponse, cosmwasm_std::StdError> {
         QueryExchangeRateRequest { chain_id }.query(self.querier)
+    }
+    pub fn redelegations(
+        &self,
+        chain_id: ::prost::alloc::string::String,
+    ) -> Result<QueryRedelegationsResponse, cosmwasm_std::StdError> {
+        QueryRedelegationsRequest { chain_id }.query(self.querier)
+    }
+    pub fn redelegation_tx(
+        &self,
+        chain_id: ::prost::alloc::string::String,
+    ) -> Result<QueryRedelegationTxResponse, cosmwasm_std::StdError> {
+        QueryRedelegationTxRequest { chain_id }.query(self.querier)
     }
 }

@@ -426,7 +426,7 @@ pub enum AccessType {
 pub mod access_type_serde {
     use super::AccessType;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<AccessType>,
         D: Deserializer<'de>,
@@ -436,7 +436,7 @@ pub mod access_type_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
@@ -485,7 +485,7 @@ pub enum ContractCodeHistoryOperationType {
 pub mod contract_code_history_operation_type_serde {
     use super::ContractCodeHistoryOperationType;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<ContractCodeHistoryOperationType>,
         D: Deserializer<'de>,
@@ -495,7 +495,7 @@ pub mod contract_code_history_operation_type_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {

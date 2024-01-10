@@ -5,6 +5,7 @@ use persistence_std::{
         cosmwasm::wasm::v1::MsgExecuteContract,
     },
 };
+use prost::Message;
 
 #[test]
 pub fn json_deserialization_fix_test() {

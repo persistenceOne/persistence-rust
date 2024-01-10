@@ -1,8 +1,7 @@
 use persistence_std_derive::CosmwasmExt;
-/// NOTE: The following type is not implemented due to current limitations of code generator
-/// which currently has issue with tendermint_proto.
-/// This will be fixed in the upcoming release.
-#[allow(dead_code)]
+/// StakeAuthorization defines authorization for delegate/undelegate/redelegate.
+///
+/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -11,9 +10,150 @@ use persistence_std_derive::CosmwasmExt;
     ::prost::Message,
     ::serde::Serialize,
     ::serde::Deserialize,
-    ::schemars::JsonSchema
+    ::schemars::JsonSchema,
+    CosmwasmExt,
 )]
-pub struct HistoricalInfo {}
+#[proto_message(type_url = "/cosmos.staking.v1beta1.StakeAuthorization")]
+pub struct StakeAuthorization {
+    /// max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
+    /// empty, there is no spend limit and any amount of coins can be delegated.
+    #[prost(message, optional, tag = "1")]
+    pub max_tokens: ::core::option::Option<super::super::base::v1beta1::Coin>,
+    /// authorization_type defines one of AuthorizationType.
+    #[prost(enumeration = "AuthorizationType", tag = "4")]
+    #[serde(
+        serialize_with = "authorization_type_serde::serialize",
+        deserialize_with = "authorization_type_serde::deserialize"
+    )]
+    pub authorization_type: i32,
+    /// validators is the oneof that represents either allow_list or deny_list
+    #[prost(oneof = "stake_authorization::Validators", tags = "2, 3")]
+    pub validators: ::core::option::Option<stake_authorization::Validators>,
+}
+/// Nested message and enum types in `StakeAuthorization`.
+pub mod stake_authorization {
+    use persistence_std_derive::CosmwasmExt;
+    /// Validators defines list of validator addresses.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(
+        Clone,
+        PartialEq,
+        Eq,
+        ::prost::Message,
+        ::serde::Serialize,
+        ::serde::Deserialize,
+        ::schemars::JsonSchema,
+        CosmwasmExt,
+    )]
+    #[proto_message(type_url = "/cosmos.staking.v1beta1.")]
+    pub struct Validators_ {
+        #[prost(string, repeated, tag = "1")]
+        pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    /// validators is the oneof that represents either allow_list or deny_list
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(
+        Clone,
+        PartialEq,
+        Eq,
+        ::prost::Oneof,
+        ::schemars::JsonSchema,
+        ::serde::Serialize,
+        ::serde::Deserialize,
+    )]
+    pub enum Validators {
+        /// allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
+        /// account.
+        #[prost(message, tag = "2")]
+        AllowList(Validators_),
+        /// deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
+        #[prost(message, tag = "3")]
+        DenyList(Validators_),
+    }
+}
+/// AuthorizationType defines the type of staking module authorization type
+///
+/// Since: cosmos-sdk 0.43
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+#[derive(::schemars::JsonSchema)]
+pub enum AuthorizationType {
+    /// AUTHORIZATION_TYPE_UNSPECIFIED specifies an unknown authorization type
+    Unspecified = 0,
+    /// AUTHORIZATION_TYPE_DELEGATE defines an authorization type for Msg/Delegate
+    Delegate = 1,
+    /// AUTHORIZATION_TYPE_UNDELEGATE defines an authorization type for Msg/Undelegate
+    Undelegate = 2,
+    /// AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate
+    Redelegate = 3,
+}
+pub mod authorization_type_serde {
+    use super::AuthorizationType;
+    use serde::{Deserialize, Deserializer, Serializer};
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
+    where
+        T: From<AuthorizationType>,
+        D: Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        let enum_value = AuthorizationType::from_str_name(&s).unwrap();
+        let int_value: T = enum_value.into();
+        return Ok(int_value);
+    }
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let s: AuthorizationType = AuthorizationType::from_i32(*value).unwrap();
+        serializer.serialize_str(s.as_str_name())
+    }
+}
+impl AuthorizationType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            AuthorizationType::Unspecified => "AUTHORIZATION_TYPE_UNSPECIFIED",
+            AuthorizationType::Delegate => "AUTHORIZATION_TYPE_DELEGATE",
+            AuthorizationType::Undelegate => "AUTHORIZATION_TYPE_UNDELEGATE",
+            AuthorizationType::Redelegate => "AUTHORIZATION_TYPE_REDELEGATE",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "AUTHORIZATION_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "AUTHORIZATION_TYPE_DELEGATE" => Some(Self::Delegate),
+            "AUTHORIZATION_TYPE_UNDELEGATE" => Some(Self::Undelegate),
+            "AUTHORIZATION_TYPE_REDELEGATE" => Some(Self::Redelegate),
+            _ => None,
+        }
+    }
+}
+/// HistoricalInfo contains header and validator information for a given block.
+/// It is stored as part of staking module's state, which persists the `n` most
+/// recent HistoricalInfo
+/// (`n` is set by the staking module's `historical_entries` parameter).
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/cosmos.staking.v1beta1.HistoricalInfo")]
+pub struct HistoricalInfo {
+    #[prost(message, optional, tag = "1")]
+    pub header: ::core::option::Option<super::super::super::tendermint::types::Header>,
+    #[prost(message, repeated, tag = "2")]
+    pub valset: ::prost::alloc::vec::Vec<Validator>,
+}
 /// CommissionRates defines the initial commission rates to be used for creating
 /// a validator.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -605,11 +745,24 @@ pub struct Pool {
     #[prost(string, tag = "2")]
     pub bonded_tokens: ::prost::alloc::string::String,
 }
-/// NOTE: The following type is not implemented due to current limitations of code generator
-/// which currently has issue with tendermint_proto.
-/// This will be fixed in the upcoming release.
-#[allow(dead_code)]
-struct ValidatorUpdates {}
+/// ValidatorUpdates defines an array of abci.ValidatorUpdate objects.
+/// TODO: explore moving this to proto/cosmos/base to separate modules from tendermint dependence
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    Eq,
+    ::prost::Message,
+    ::serde::Serialize,
+    ::serde::Deserialize,
+    ::schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/cosmos.staking.v1beta1.ValidatorUpdates")]
+pub struct ValidatorUpdates {
+    #[prost(message, repeated, tag = "1")]
+    pub updates: ::prost::alloc::vec::Vec<super::super::super::tendermint::abci::ValidatorUpdate>,
+}
 /// TokenizeShareRecord represents a tokenized delegation.
 ///
 /// Since: cosmos-sdk 0.47-lsm
@@ -679,7 +832,7 @@ pub enum BondStatus {
 pub mod bond_status_serde {
     use super::BondStatus;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<BondStatus>,
         D: Deserializer<'de>,
@@ -689,7 +842,7 @@ pub mod bond_status_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
@@ -736,7 +889,7 @@ pub enum Infraction {
 pub mod infraction_serde {
     use super::Infraction;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<Infraction>,
         D: Deserializer<'de>,
@@ -746,7 +899,7 @@ pub mod infraction_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
@@ -795,7 +948,7 @@ pub enum TokenizeShareLockStatus {
 pub mod tokenize_share_lock_status_serde {
     use super::TokenizeShareLockStatus;
     use serde::{Deserialize, Deserializer, Serializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+    pub fn deserialize<'de, T, D>(deserializer: D) -> std::result::Result<T, D::Error>
     where
         T: From<TokenizeShareLockStatus>,
         D: Deserializer<'de>,
@@ -805,7 +958,7 @@ pub mod tokenize_share_lock_status_serde {
         let int_value: T = enum_value.into();
         return Ok(int_value);
     }
-    pub fn serialize<S>(value: &i32, serializer: S) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(value: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
